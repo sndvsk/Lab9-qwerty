@@ -4,9 +4,9 @@
 3. Gerli Kõiv
 
 ## Homework 1:
-<When you finish your homework, add a link pointing to the solution here (for example, a link to a page on the wiki)> 
+User stories - functional and non-functional requirements
 
-https://bitbucket.org/gerlik/lab9-qwerty/wiki/Home
+Wiki: https://bitbucket.org/gerlik/lab9-qwerty/wiki/Requirements
 
 ## Homework 2:
 <Links to the solution>
