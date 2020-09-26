@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ee.ut.math.tvt.salessystem</OriginalElement>
+  <nodes>
+    <node x="298.0" y="799.0">ee.ut.math.tvt.salessystem.SalesSystemException</node>
+    <node x="0.0" y="507.0">ee.ut.math.tvt.salessystem.dataobjects.StockItem</node>
+    <node x="611.0" y="799.0">ee.ut.math.tvt.salessystem.ui.controllers.HistoryController</node>
+    <node x="0.0" y="235.0">ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO</node>
+    <node x="578.0" y="507.0">ee.ut.math.tvt.salessystem.ui.controllers.StockController</node>
+    <node x="645.0" y="0.0">ee.ut.math.tvt.salessystem.dataobjects.SoldItem</node>
+    <node x="0.0" y="0.0">ee.ut.math.tvt.salessystem.dao.SalesSystemDAO</node>
+    <node x="0.0" y="799.0">ee.ut.math.tvt.salessystem.ui.SalesSystemUI</node>
+    <node x="271.0" y="0.0">ee.ut.math.tvt.salessystem.ui.controllers.PurchaseController</node>
+    <node x="322.0" y="507.0">ee.ut.math.tvt.salessystem.ui.ConsoleUI</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO" target="ee.ut.math.tvt.salessystem.dao.SalesSystemDAO">
+      <point x="0.0" y="-113.5" />
+      <point x="0.0" y="92.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="386.62756861725325" y="324.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
