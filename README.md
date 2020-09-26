@@ -4,26 +4,44 @@
 3. Gerli Kõiv
 
 ## Homework 1:
+Requirements Gathering (weeks 2 & 3) 
+
 User stories - functional and non-functional requirements
 
-Wiki: https://bitbucket.org/gerlik/lab9-qwerty/wiki/Requirements
+* [Wiki link](https://bitbucket.org/gerlik/lab9-qwerty/wiki/Requirements)
 
 ## Homework 2:
-<Links to the solution>
+Requirements Specification, Modeling, Planning (weeks 4 & 5) 
+
+Use Cases(5) & Jira Issues (50)
+
+* Use Cases:
+* Jira Board:
+* Class Diagram:
 
 ## Homework 3:
-<Links to the solution>
+Development Environment (weeks 6 & 7) 
+
+*
 
 ## Homework 4:
-<Links to the solution>
+Development - Phase I (weeks 8 & 9) 
+
+*
 
 ## Homework 5:
-<Links to the solution>
+Development - Phase II (weeks 10 & 11) 
+
+*
 
 ## Homework 6:
-<Links to the solution>
+Automatic Unit Tests, Refactoring & (System-level) Functional Test Planning (weeks 12 & 13) 
+
+*
 
 ## Homework 7:
-<Links to the solution>
+Functional and Non-Functional System Testing (weeks 14 & 15) 
+
+*
 
 We encourage you to use [markdown syntax](https://confluence.atlassian.com/bitbucketserver/markdown-syntax-guide-776639995.html)
