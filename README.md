@@ -15,9 +15,9 @@ Requirements Specification, Modeling, Planning (weeks 4 & 5)
 
 Use Cases(5) & Jira Issues (50)
 
-* Use Cases:
-* Jira Board:
-* Class Diagram:
+* [Use Cases](https://bitbucket.org/gerlik/lab9-qwerty/wiki/Home)
+* [Jira Board](https://lab9.atlassian.net/jira/software/projects/SE/boards/1)
+* [Class Diagram](https://bitbucket.org/gerlik/lab9-qwerty/src/master/salessystem.png)
 
 ## Homework 3:
 Development Environment (weeks 6 & 7) 
