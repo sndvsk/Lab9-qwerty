@@ -22,7 +22,8 @@ Use Cases(5) & Jira Issues (50)
 ## Homework 3:
 Development Environment (weeks 6 & 7) 
 
-*
+I hope this creates a merge 
+conflict
 
 ## Homework 4:
 Development - Phase I (weeks 8 & 9) 
