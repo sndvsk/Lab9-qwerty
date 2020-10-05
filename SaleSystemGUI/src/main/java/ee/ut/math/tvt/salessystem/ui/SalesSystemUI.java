@@ -5,6 +5,7 @@ import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.ui.controllers.PurchaseController;
 import ee.ut.math.tvt.salessystem.ui.controllers.StockController;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
+import ee.ut.math.tvt.salessystem.ui.controllers.TeamTab;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -56,6 +57,12 @@ public class SalesSystemUI extends Application {
         historyTab.setClosable(false);
         //historyTab.setContent(loadControls("HistoryTab.fxml", new HistoryController()));
 
+        Tab teamTab = new Tab();
+        historyTab.setText("Team");
+        historyTab.setClosable(false);
+        purchaseTab.setContent(loadControls("TeamTab.fxml", new TeamTab()));
+
+
         Group root = new Group();
         Scene scene = new Scene(root, 600, 500, Color.WHITE);
         //scene.getStylesheets().add(getClass().getResource("DefaultTheme.css").toExternalForm());
@@ -63,7 +70,7 @@ public class SalesSystemUI extends Application {
         BorderPane borderPane = new BorderPane();
         borderPane.prefHeightProperty().bind(scene.heightProperty());
         borderPane.prefWidthProperty().bind(scene.widthProperty());
-        borderPane.setCenter(new TabPane(purchaseTab, stockTab, historyTab));
+        borderPane.setCenter(new TabPane(purchaseTab, stockTab, historyTab, teamTab));
         root.getChildren().add(borderPane);
 
         primaryStage.setTitle("Sales system");
