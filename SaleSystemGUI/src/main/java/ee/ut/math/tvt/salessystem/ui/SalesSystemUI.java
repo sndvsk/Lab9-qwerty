@@ -5,7 +5,7 @@ import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.ui.controllers.PurchaseController;
 import ee.ut.math.tvt.salessystem.ui.controllers.StockController;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
-import ee.ut.math.tvt.salessystem.ui.controllers.TeamTab;
+import ee.ut.math.tvt.salessystem.ui.controllers.TeamTabController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -60,7 +60,7 @@ public class SalesSystemUI extends Application {
         Tab teamTab = new Tab();
         historyTab.setText("Team");
         historyTab.setClosable(false);
-        purchaseTab.setContent(loadControls("TeamTab.fxml", new TeamTab()));
+        purchaseTab.setContent(loadControls("TeamTab.fxml", new TeamTabController()));
 
 
         Group root = new Group();
