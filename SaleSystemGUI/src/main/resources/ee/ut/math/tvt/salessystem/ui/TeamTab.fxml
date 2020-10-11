@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL">
         <items>
           <AnchorPane>
                <children>
-                  <TitledPane animated="false" text="Team info">
+                  <TitledPane alignment="CENTER" animated="false" collapsible="false" contentDisplay="CENTER" text="Team info" textAlignment="CENTER">
                     <content>
                       <AnchorPane>
                            <children>
@@ -25,20 +31,23 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <Label text="Team Name" GridPane.rowIndex="0" />
                                     <Label text="Team Leader" GridPane.rowIndex="1" />
                                     <Label layoutX="10.0" layoutY="49.0" text="Leader e-mail" GridPane.rowIndex="2" />
                                     <Label layoutX="10.0" layoutY="81.0" text="Members" GridPane.rowIndex="3" />
-                                    <Label fx:id="teamName" text="%teamName" GridPane.columnIndex="1" />
-                                    <Label fx:id="teamLeader" text="%teamLeader" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label fx:id="teamLeaderEmail" text="%teamLeaderEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label fx:id="teamMember1" text="%teamMember1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label fx:id="teamMember2" text="%teamMember2" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label fx:id="teamName" text="teamName" GridPane.columnIndex="1" />
+                                    <Label fx:id="teamLeader" text="teamLeader" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label fx:id="teamLeaderEmail" text="teamLeaderEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="teamMember1" text="teamMember1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label fx:id="teamMember2" text="teamMember2" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label fx:id="teamMember3" text="teamMember3" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                  </children>
                               </GridPane>
-                              <ImageView fx:id="logoPath" fitHeight="150.0" fitWidth="155.0" layoutX="250.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+                               <ImageView fx:id="imageView" image="imageView" fitHeight="150.0" fitWidth="155.0"
+                                          layoutX="250.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true"/>
                            </children>
                         </AnchorPane>
                     </content>
