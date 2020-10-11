@@ -1,6 +1,5 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
-import com.sun.javafx.beans.IDProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
