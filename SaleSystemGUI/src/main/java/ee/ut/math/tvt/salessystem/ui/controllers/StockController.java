@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
+import ee.ut.math.tvt.salessystem.SalesSystemException;
+import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import javafx.collections.FXCollections;
@@ -36,6 +38,8 @@ public class StockController implements Initializable {
     private TextField priceField;
     @FXML
     private TableView<StockItem> warehouseTableView;
+    @FXML
+    private InMemorySalesSystemDAO stock;
 
     public StockController(SalesSystemDAO dao) {
         this.dao = dao;
@@ -54,7 +58,20 @@ public class StockController implements Initializable {
     public void addProductButtonClicked() {
         log.info("Add new product");
         refreshStockItems();
-        StockItem newItem = new StockItem(new Long("7"), nameField.toString(), "description", Double.parseDouble(String.valueOf(priceField)), Integer.parseInt(String.valueOf(quantityField)));
+        try {
+            // ei tea kas see töötab, sest saan neid errori ja praegu ei saa aru mida nendega teha:
+
+            // Caused by: java.lang.reflect.InvocationTargetException
+
+            // Caused by: java.lang.NumberFormatException:
+            // For input string: "TextField[id=barCodeField, styleClass=text-input text-field]"
+
+            StockItem newItem = new StockItem(Long.parseLong(barCodeField.getText()), nameField.toString(), "description", Double.parseDouble(String.valueOf(priceField)), Integer.parseInt(String.valueOf(quantityField)));
+            stock.saveStockItem(newItem);
+        } catch (SalesSystemException e) {
+            log.error(e.getMessage(), e);
+        }
+        refreshStockItems();
         // TODO
     }
 
@@ -89,5 +106,31 @@ public class StockController implements Initializable {
     private void enableInputs() {
         saveChanges.setDisable(false);
         deleteProduct.setDisable(false);
+    }
+
+    //
+    private void disableInputs() {
+        resetProductField();
+        addProduct.setDisable(true);
+        saveChanges.setDisable(true);
+        deleteProduct.setDisable(false);
+        disableProductField();
+    }
+
+    //
+    private void disableProductField() {
+        this.addProduct.setDisable(true);
+        this.barCodeField.setDisable(true);
+        this.quantityField.setDisable(true);
+        this.nameField.setDisable(true);
+        this.priceField.setDisable(true);
+    }
+
+    //
+    private void resetProductField() {
+        barCodeField.setText("");
+        quantityField.setText("1");
+        nameField.setText("");
+        priceField.setText("");
     }
 }
