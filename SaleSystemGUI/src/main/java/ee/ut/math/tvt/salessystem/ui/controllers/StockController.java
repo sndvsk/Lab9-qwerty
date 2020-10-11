@@ -29,6 +29,8 @@ public class StockController implements Initializable {
     @FXML
     private Button deleteProduct;
     @FXML
+    private Button deleteItem;
+    @FXML
     private TextField barCodeField;
     @FXML
     private TextField quantityField;
@@ -54,6 +56,7 @@ public class StockController implements Initializable {
     }
 
     // Event handler for adding new product to warehouse
+    // SE-14
     @FXML
     public void addProductButtonClicked() {
         log.info("Add new product");
@@ -85,18 +88,29 @@ public class StockController implements Initializable {
     }
 
     // Event handler for deleting a product from the system
+    // SE-20
     @FXML
     public void deleteProductButtonClicked() {
         log.info("Deleting a product");
         refreshStockItems();
     }
 
+    // Event handler for deleting some quantity of items of specific product from the system
+    // SE-19
+    @FXML
+    public void deleteItemButtonClicked() {
+        log.info("Deleting item of a product");
+        refreshStockItems();
+    }
+
     // Event handler to refresh warehouse table view
+    // SE-18
     @FXML
     public void refreshButtonClicked() {
         refreshStockItems();
     }
 
+    // SE-17
     private void refreshStockItems() {
         warehouseTableView.setItems(FXCollections.observableList(dao.findStockItems()));
         warehouseTableView.refresh();
