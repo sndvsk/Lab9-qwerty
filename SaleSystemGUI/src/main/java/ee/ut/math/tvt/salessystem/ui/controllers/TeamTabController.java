@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
+import com.sun.javafx.beans.IDProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -20,7 +21,6 @@ import java.util.ResourceBundle;
 public class TeamTabController implements Initializable {
     private static final Logger log = LogManager.getLogger(TeamTabController.class);
 
-
     @FXML
     private Label teamName;
     @FXML
@@ -35,18 +35,19 @@ public class TeamTabController implements Initializable {
     private Label teamMember3;
     @FXML
     private ImageView imageView;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Properties properties = new Properties();
-        Path propFile = Paths.get("");
+        Path propFile = Paths.get("../src/main/resources/application.properties");
         try{
             properties.load(Files.newBufferedReader(propFile));
-            teamName.setText(properties.getProperty("teamname"));
+            teamName.setText(properties.getProperty("teamName"));
             teamLeader.setText(properties.getProperty("teamLeader"));
             teamLeaderEmail.setText(properties.getProperty("teamLeaderEmail"));
-            teamMember1.setText(properties.getProperty("teameMember1"));
-            teamMember2.setText(properties.getProperty("teameMember2"));
-            teamMember3.setText(properties.getProperty("teameMember3"));
+            teamMember1.setText(properties.getProperty("teamMember1"));
+            teamMember2.setText(properties.getProperty("teamMember2"));
+            teamMember3.setText(properties.getProperty("teamMember3"));
             File file = new File(properties.getProperty("logoPath"));
             imageView.setImage(new Image(file.toURI().toString()));
 
