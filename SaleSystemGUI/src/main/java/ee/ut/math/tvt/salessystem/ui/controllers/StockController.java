@@ -73,7 +73,7 @@ public class StockController implements Initializable {
 
 
             StockItem newItem = new StockItem(Long.parseLong(barCodeField.getText()), nameField.toString(), "description", Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()));
-            warehouseStock.saveStockItem(newItem);
+            warehouseStock.addItem(newItem);
         } catch (NullPointerException | SalesSystemException e) {
             log.error(e.getMessage(), e);
         }

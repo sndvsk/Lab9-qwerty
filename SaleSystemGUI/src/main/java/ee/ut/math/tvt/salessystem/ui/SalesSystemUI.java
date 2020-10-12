@@ -34,7 +34,7 @@ public class SalesSystemUI extends Application {
     private final ShoppingCart shoppingCart;
     private final WarehouseStock warehouseStock;
 
-    public SalesSystemUI(WarehouseStock stock) {
+    public SalesSystemUI() {
         dao = new InMemorySalesSystemDAO();
         shoppingCart = new ShoppingCart(dao);
         warehouseStock = new WarehouseStock(dao);
