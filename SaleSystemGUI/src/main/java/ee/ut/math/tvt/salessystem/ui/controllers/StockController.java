@@ -56,7 +56,9 @@ public class StockController implements Initializable {
     }
 
     // Event handler for adding new product to warehouse
-    // SE-14
+    // SE-14 new items
+    // SE-15 barCodeField automatically generated
+    // SE-16 SE-21 name field
     @FXML
     public void addProductButtonClicked() {
         log.info("Add new product");
@@ -88,7 +90,7 @@ public class StockController implements Initializable {
     }
 
     // Event handler for deleting a product from the system
-    // SE-20
+    // SE-20 product deletion deletion
     @FXML
     public void deleteProductButtonClicked() {
         log.info("Deleting a product");
@@ -96,7 +98,7 @@ public class StockController implements Initializable {
     }
 
     // Event handler for deleting some quantity of items of specific product from the system
-    // SE-19
+    // SE-19 item deletion
     @FXML
     public void deleteItemButtonClicked() {
         log.info("Deleting item of a product");
@@ -104,13 +106,14 @@ public class StockController implements Initializable {
     }
 
     // Event handler to refresh warehouse table view
-    // SE-18
+    // SE-18 list refresh
     @FXML
     public void refreshButtonClicked() {
         refreshStockItems();
     }
 
-    // SE-17
+    // SE-18 list refresh
+    // SE-17 list of products
     private void refreshStockItems() {
         warehouseTableView.setItems(FXCollections.observableList(dao.findStockItems()));
         warehouseTableView.refresh();
