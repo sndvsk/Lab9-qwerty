@@ -6,45 +6,56 @@
 
 <AnchorPane prefHeight="400.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="428.6666666666667" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="428.6666666666667" styleClass="background_style" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane>
                <children>
-                  <TitledPane alignment="CENTER" animated="false" collapsible="false" contentDisplay="CENTER" maxWidth="10000.0" prefHeight="245.33333333333334" prefWidth="426.6666666666667" text="Team info" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TitledPane alignment="CENTER" animated="false" collapsible="false" contentDisplay="CENTER" maxWidth="10000.0" prefHeight="265.3333333333333" prefWidth="446.0" text="Team info" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <content>
-                      <AnchorPane>
+                        <Pane styleClass="sub_background">
                            <children>
-                              <GridPane layoutX="19.600000381469727" layoutY="18.600000381469727">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="10000.0" minWidth="10.0" prefWidth="150.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
+                              <HBox maxWidth="10000.0" prefHeight="150" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Label text="Team Name" GridPane.rowIndex="0" />
-                                    <Label text="Team Leader" GridPane.rowIndex="1" />
-                                    <Label layoutX="10.0" layoutY="49.0" text="Leader e-mail" GridPane.rowIndex="2" />
-                                    <Label layoutX="10.0" layoutY="81.0" text="Members" GridPane.rowIndex="3" />
-                                    <Label fx:id="teamName" text="teamName" GridPane.columnIndex="1" />
-                                    <Label fx:id="teamLeader" text="teamLeader" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label fx:id="teamLeaderEmail" text="teamLeaderEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label fx:id="teamMember1" text="teamMember1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label fx:id="teamMember2" text="teamMember2" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <Label fx:id="teamMember3" text="teamMember3" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                  <AnchorPane>
+                                       <children>
+                                          <GridPane layoutX="19.600000381469727" layoutY="18.600000381469727" prefHeight="173.0" prefWidth="420.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="10000.0" minWidth="10.0" prefWidth="150.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Team Name" GridPane.rowIndex="0" />
+                                                <Label text="Team Leader" GridPane.rowIndex="1" />
+                                                <Label layoutX="10.0" layoutY="49.0" text="Leader e-mail" GridPane.rowIndex="2" />
+                                                <Label layoutX="10.0" layoutY="81.0" text="Members" GridPane.rowIndex="3" />
+                                                <Label fx:id="teamName" text="teamName" GridPane.columnIndex="1" />
+                                                <Label fx:id="teamLeader" text="teamLeader" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label fx:id="teamLeaderEmail" text="teamLeaderEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label fx:id="teamMember1" text="teamMember1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label fx:id="teamMember2" text="teamMember2" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label fx:id="teamMember3" text="teamMember3" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
+                                     <AnchorPane>
+                                       <children>
+                                            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                   </ImageView>
+                                       </children>
+                                     </AnchorPane>
                                  </children>
-                              </GridPane>
-                               <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="155.0" layoutX="250.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-
-                               </ImageView>
+                              </HBox>
                            </children>
-                        </AnchorPane>
+                        </Pane>
                     </content>
                   </TitledPane>
                </children>
