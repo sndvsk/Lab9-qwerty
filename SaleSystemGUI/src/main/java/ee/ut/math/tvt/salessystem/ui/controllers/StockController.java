@@ -1,9 +1,9 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
 import ee.ut.math.tvt.salessystem.SalesSystemException;
-import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
+import ee.ut.math.tvt.salessystem.logic.WarehouseStock;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +21,7 @@ public class StockController implements Initializable {
     private static final Logger log = LogManager.getLogger(StockController.class);
 
     private final SalesSystemDAO dao;
+    private final WarehouseStock warehouseStock;
 
     @FXML
     private Button addProduct;
@@ -40,17 +41,19 @@ public class StockController implements Initializable {
     private TextField priceField;
     @FXML
     private TableView<StockItem> warehouseTableView;
-    @FXML
-    private InMemorySalesSystemDAO stock;
 
-    public StockController(SalesSystemDAO dao) {
+    public StockController(SalesSystemDAO dao, WarehouseStock warehouseStock) {
         this.dao = dao;
+        this.warehouseStock = warehouseStock;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         saveChanges.setDisable(true);
         deleteProduct.setDisable(true);
+        //disableProductField();
+        warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
+
         refreshStockItems();
         // TODO refresh view after adding new items
     }
@@ -68,12 +71,10 @@ public class StockController implements Initializable {
 
             // Caused by: java.lang.reflect.InvocationTargetException
 
-            // Caused by: java.lang.NumberFormatException:
-            // For input string: "TextField[id=barCodeField, styleClass=text-input text-field]"
 
-            StockItem newItem = new StockItem(Long.parseLong(barCodeField.getText()), nameField.toString(), "description", Double.parseDouble(String.valueOf(priceField)), Integer.parseInt(String.valueOf(quantityField)));
-            stock.saveStockItem(newItem);
-        } catch (SalesSystemException e) {
+            StockItem newItem = new StockItem(Long.parseLong(barCodeField.getText()), nameField.toString(), "description", Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()));
+            warehouseStock.saveStockItem(newItem);
+        } catch (NullPointerException | SalesSystemException e) {
             log.error(e.getMessage(), e);
         }
         refreshStockItems();
