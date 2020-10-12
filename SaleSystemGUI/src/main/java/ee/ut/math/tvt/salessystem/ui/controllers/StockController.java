@@ -52,7 +52,7 @@ public class StockController implements Initializable {
         saveChanges.setDisable(true);
         deleteProduct.setDisable(true);
         //disableProductField();
-        warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
+        //warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
 
         refreshStockItems();
         // TODO refresh view after adding new items
@@ -65,14 +65,11 @@ public class StockController implements Initializable {
     @FXML
     public void addProductButtonClicked() {
         log.info("Add new product");
-        refreshStockItems();
+        //refreshStockItems();
+
+        // Long.parseLong(barCodeField.getText())
         try {
-            // ei tea kas see töötab, sest saan neid errori ja praegu ei saa aru mida nendega teha:
-
-            // Caused by: java.lang.reflect.InvocationTargetException
-
-
-            StockItem newItem = new StockItem(Long.parseLong(barCodeField.getText()), nameField.toString(), "description", Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()));
+            StockItem newItem = new StockItem(generateBarcode(), nameField.getText(), "description", Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()));
             warehouseStock.addItem(newItem);
         } catch (NullPointerException | SalesSystemException e) {
             log.error(e.getMessage(), e);
@@ -118,6 +115,12 @@ public class StockController implements Initializable {
     private void refreshStockItems() {
         warehouseTableView.setItems(FXCollections.observableList(dao.findStockItems()));
         warehouseTableView.refresh();
+    }
+
+    // SE-15 barCodeField automatically generated
+    private Long generateBarcode() {
+        Long last = dao.lastStockItem();
+        return last + 1;
     }
 
     // Enable buttons like this

@@ -36,6 +36,12 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
 
     @Override
+    public Long lastStockItem() {
+        StockItem last = stockItemList.get(stockItemList.size() - 1);
+        return last.getId();
+    }
+
+    @Override
     public void saveSoldItem(SoldItem item) {
         soldItemList.add(item);
     }
