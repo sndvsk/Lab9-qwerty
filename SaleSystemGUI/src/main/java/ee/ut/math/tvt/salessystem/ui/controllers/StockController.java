@@ -68,8 +68,11 @@ public class StockController implements Initializable {
         log.info("Add new product");
         //refreshStockItems();
 
-        // Long.parseLong(barCodeField.getText())
         try {
+            // TODO if | on tühi, kasutame generateBarcode().
+            //         v
+            // Long.parseLong(barCodeField.getText())
+
             StockItem newItem = new StockItem(generateBarcode(), nameField.getText(), "description", Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()));
             warehouseStock.addItem(newItem);
         } catch (NullPointerException | SalesSystemException e) {
