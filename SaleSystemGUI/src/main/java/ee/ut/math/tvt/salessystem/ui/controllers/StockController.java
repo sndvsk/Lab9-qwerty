@@ -51,6 +51,7 @@ public class StockController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         saveChanges.setDisable(true);
         deleteProduct.setDisable(true);
+        barCodeField.setDisable(true);
         //disableProductField();
         //warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
 
