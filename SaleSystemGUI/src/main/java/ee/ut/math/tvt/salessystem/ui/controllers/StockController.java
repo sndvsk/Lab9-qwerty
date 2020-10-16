@@ -80,7 +80,7 @@ public class StockController implements Initializable {
                 warehouseStock.addItem(newItem);
             } else {
                 long barCode = Long.parseLong(barCodeField.getText());
-                StockItem newItem = new StockItem(barCode, nameField.getText(), "description", Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()));
+                StockItem newItem = new StockItem(barCode, nameField.getText(), getStockItemByBarcode().getDescription(), Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()));
                 warehouseStock.updateItem(newItem);
             }
         } catch (NullPointerException | SalesSystemException e) {
@@ -91,10 +91,14 @@ public class StockController implements Initializable {
     }
 
     // Event handler for deleting a product from the system
-    // SE-20 product deletion deletion
+    // SE-20 product deletion
     @FXML
-    public void deleteProductButtonClicked() {
+    public void deleteProductButtonClicked(){
         log.info("Deleting a product");
+        long barCode = Long.parseLong(barCodeField.getText());
+        // For now quantity = 1, if user does not insert it, it throws an error, quantity doesn't matter because this method deletes all of the item the data
+        StockItem item = new StockItem(barCode, nameField.getText(), getStockItemByBarcode().getDescription(), Double.parseDouble(priceField.getText()), 1);
+        warehouseStock.deleteItem(item);
         refreshStockItems();
     }
 

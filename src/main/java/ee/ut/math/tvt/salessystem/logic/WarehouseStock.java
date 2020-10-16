@@ -34,6 +34,10 @@ public class WarehouseStock {
         }
     }
 
+    public void deleteItem(StockItem item){
+        dao.deleteStockItem(item);
+    }
+
     public List<StockItem> getAll() {
         return stockItems;
     }
