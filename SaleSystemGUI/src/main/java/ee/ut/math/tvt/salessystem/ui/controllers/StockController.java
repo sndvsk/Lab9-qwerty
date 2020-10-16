@@ -4,6 +4,8 @@ import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import ee.ut.math.tvt.salessystem.logic.WarehouseStock;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -49,9 +51,16 @@ public class StockController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 //        deleteProduct.setDisable(true);
 //        barCodeField.setDisable(true);
-        //disableProductField();
-        //warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
-
+//        disableProductField();
+        // warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
+        this.barCodeField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+                if (!newPropertyValue) {
+                    fillInputsBySelectedStockItem();
+                }
+            }
+        });
         refreshStockItems();
         // TODO refresh view after adding new items
     }
@@ -115,6 +124,27 @@ public class StockController implements Initializable {
     private Long generateBarcode() {
         Long last = dao.lastStockItem();
         return last + 1;
+    }
+
+    private void fillInputsBySelectedStockItem() {
+        StockItem stockItem = getStockItemByBarcode();
+        if (stockItem != null) {
+            nameField.setText(stockItem.getName());
+            priceField.setText(String.valueOf(stockItem.getPrice()));
+        } else {
+            resetProductField();
+        }
+    }
+
+    // Search the warehouse for a StockItem with the bar code entered
+    // to the barCode textfield.
+    private StockItem getStockItemByBarcode() {
+        try {
+            long code = Long.parseLong(barCodeField.getText());
+            return dao.findStockItem(code);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     // Enable buttons like this
