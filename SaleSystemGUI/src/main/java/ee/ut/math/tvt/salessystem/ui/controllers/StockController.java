@@ -26,8 +26,6 @@ public class StockController implements Initializable {
     @FXML
     private Button addProduct;
     @FXML
-    private Button saveChanges;
-    @FXML
     private Button deleteProduct;
     @FXML
     private Button deleteItem;
@@ -49,9 +47,8 @@ public class StockController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        saveChanges.setDisable(true);
-        deleteProduct.setDisable(true);
-        barCodeField.setDisable(true);
+//        deleteProduct.setDisable(true);
+//        barCodeField.setDisable(true);
         //disableProductField();
         //warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
 
@@ -65,28 +62,21 @@ public class StockController implements Initializable {
     // SE-16 SE-21 name field
     @FXML
     public void addProductButtonClicked() {
-        log.info("Add new product");
+        log.info("Add new products");
         //refreshStockItems();
 
         try {
-            // TODO if | on tühi, kasutame generateBarcode().
-            //         v
-            // Long.parseLong(barCodeField.getText())
-
-            StockItem newItem = new StockItem(generateBarcode(), nameField.getText(), "description", Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()));
-            warehouseStock.addItem(newItem);
+            if (barCodeField.getText().equals("") || barCodeField.getText() == null) {
+                StockItem newItem = new StockItem(generateBarcode(), nameField.getText(), "description", Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()));
+                warehouseStock.addItem(newItem);
+            } else {
+                long barCode = Long.parseLong(barCodeField.getText());
+                StockItem newItem = new StockItem(barCode, nameField.getText(), "description", Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()));
+                warehouseStock.updateItem(newItem);
+            }
         } catch (NullPointerException | SalesSystemException e) {
             log.error(e.getMessage(), e);
         }
-        refreshStockItems();
-        // TODO
-    }
-
-    // Event handler for updating existing product data
-    @FXML
-    public void saveChangesButtonClicked() {
-        log.info("Update product info");
-        enableInputs();
         refreshStockItems();
         // TODO
     }
@@ -99,7 +89,7 @@ public class StockController implements Initializable {
         refreshStockItems();
     }
 
-    // Event handler for deleting some quantity of items of specific product from the system
+    // Event handler for deleting some quantity of items of specific product from the systems
     // SE-19 item deletion
     @FXML
     public void deleteItemButtonClicked() {
@@ -129,7 +119,6 @@ public class StockController implements Initializable {
 
     // Enable buttons like this
     private void enableInputs() {
-        saveChanges.setDisable(false);
         deleteProduct.setDisable(false);
     }
 
@@ -137,7 +126,6 @@ public class StockController implements Initializable {
     private void disableInputs() {
         resetProductField();
         addProduct.setDisable(true);
-        saveChanges.setDisable(true);
         deleteProduct.setDisable(false);
         disableProductField();
     }

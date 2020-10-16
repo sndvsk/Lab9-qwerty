@@ -38,6 +38,8 @@ public interface SalesSystemDAO {
 
     void saveSoldItem(SoldItem item);
 
+    void updateStockItem(StockItem stockItem);
+
     void beginTransaction();
 
     void rollbackTransaction();

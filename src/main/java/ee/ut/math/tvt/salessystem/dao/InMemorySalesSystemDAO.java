@@ -52,6 +52,11 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
 
     @Override
+    public void updateStockItem(StockItem item) {
+        stockItemList.set(Math.toIntExact(item.getId() - 1), item);
+    }
+
+    @Override
     public void beginTransaction() {
     }
 

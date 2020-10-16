@@ -16,12 +16,22 @@ public class WarehouseStock {
         this.dao = dao;
     }
 
+    // Add completely new StockItem
     public void addItem(StockItem item) {
-        // TODO In case such stockItem already exists increase the quantity of the existing stock
         // TODO verify that warehouse items' quantity remains at least zero or throw an exception
 
+        Long id = item.getId();
         dao.saveStockItem(item);
         //log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
+    }
+
+    // If stockItem already exists don't save it as a new item,
+    // Currently updates all fields
+    public void updateItem(StockItem item) {
+        Long id = item.getId();
+        if (dao.findStockItem(id).getId().equals(item.getId())) {
+            dao.updateStockItem(item);
+        }
     }
 
     public List<StockItem> getAll() {
