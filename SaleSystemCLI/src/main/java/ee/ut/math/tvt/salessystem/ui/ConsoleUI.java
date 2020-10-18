@@ -7,6 +7,7 @@ import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
 import ee.ut.math.tvt.salessystem.dto.Team;
+import ee.ut.math.tvt.salessystem.logic.WarehouseStock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,11 +25,13 @@ public class ConsoleUI {
 
     private final SalesSystemDAO dao;
     private final ShoppingCart cart;
+    private WarehouseStock stock;
     private Team team;
 
     public ConsoleUI(SalesSystemDAO dao) {
         this.dao = dao;
         cart = new ShoppingCart(dao);
+        stock = new WarehouseStock(dao);
         team = new Team();
     }
 
@@ -56,13 +59,47 @@ public class ConsoleUI {
 
     private void showStock() {
         List<StockItem> stockItems = dao.findStockItems();
+
         System.out.println("-------------------------");
-        for (StockItem si : stockItems) {
+        for (StockItem si : stock.getAll()) {
             System.out.println(si.getId() + " " + si.getName() + " " + si.getPrice() + "Euro (" + si.getQuantity() + " items)");
         }
-        if (stockItems.size() == 0) {
+        if (stock.getAll().size() == 0) {
             System.out.println("\tNothing");
         }
+        System.out.println("-------------------------");
+    }
+
+    private void addToStock(StockItem si){
+        System.out.println("-------------------------");
+        try {
+            StockItem item = dao.findStockItem(si.getId());
+            if (item != null && si.getName().equals(item.getName())) {
+                stock.updateItem(si);
+                System.out.println("Item " + si.toString() + " updated");
+            } else if(item == null) {
+                stock.addItem(si);
+                System.out.println("Item " + si.toString() + " added to stock");
+            } else {
+                System.out.println("no stock item with id " + si.getId());
+
+            }
+        } catch (SalesSystemException | NoSuchElementException e) {
+            log.error(e.getMessage(), e);
+        }
+        System.out.println("-------------------------");
+    }
+
+    private void deleteFromStock(String id) {
+        try {
+            StockItem item = dao.findStockItem(Long.parseLong(id));
+            stock.deleteItem(item);
+
+        }  catch (SalesSystemException | NoSuchElementException e) {
+            log.error(e.getMessage(), e);
+        }
+        System.out.println("-------------------------");
+        System.out.println("Done");
         System.out.println("-------------------------");
     }
 
@@ -88,6 +125,8 @@ public class ConsoleUI {
         System.out.println("Usage:");
         System.out.println("h\t\tShow this help");
         System.out.println("w\t\tShow warehouse contents");
+        System.out.println("aw IDX N D P Q\tAdd item 'N'name,  to stock");
+        System.out.println("d  IDX\tDelete item from stock by index IDX");
         System.out.println("c\t\tShow cart contents");
         System.out.println("a IDX NR \tAdd NR of stock item with index IDX to the cart");
         System.out.println("p\t\tPurchase the shopping cart");
@@ -105,6 +144,18 @@ public class ConsoleUI {
             System.exit(0);
         else if (c[0].equals("w"))
             showStock();
+        else if (c[0].equals("aw")  && c.length == 6){
+                Long idx = Long.parseLong(c[1]);
+                String name = c[2];
+                String desc = c[3];
+                double price = Double.parseDouble(c[4]);
+                int quantity = Integer.parseInt(c[5]);
+                addToStock(new StockItem(idx, name, desc, price,quantity));
+        }
+
+
+        else if (c[0].equals("d") && c.length==2)
+            deleteFromStock( c[1]);
         else if (c[0].equals("c"))
             showCart();
         else if (c[0].equals("p"))
@@ -131,7 +182,6 @@ public class ConsoleUI {
             System.out.println("unknown command");
         }
     }
-
 
 
 }
