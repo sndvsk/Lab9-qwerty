@@ -4,6 +4,7 @@ import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class InMemorySalesSystemDAO implements SalesSystemDAO {
@@ -36,6 +37,12 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
 
     @Override
+    public Long lastStockItem() {
+        StockItem last = stockItemList.get(stockItemList.size() - 1);
+        return last.getId();
+    }
+
+    @Override
     public void saveSoldItem(SoldItem item) {
         soldItemList.add(item);
     }
@@ -43,6 +50,24 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     @Override
     public void saveStockItem(StockItem stockItem) {
         stockItemList.add(stockItem);
+    }
+
+    @Override
+    public void updateStockItem(StockItem item) {
+        stockItemList.set(Math.toIntExact(item.getId() - 1), item);
+    }
+
+    @Override
+    public void deleteStockItem(StockItem stockItem){
+
+        // Remove item from list without Exceptions
+        Iterator<StockItem> iter = stockItemList.iterator();
+        while (iter.hasNext()) {
+            StockItem item = iter.next();
+            if (item.getId() == stockItem.getId()) {
+                iter.remove();
+            }
+        }
     }
 
     @Override

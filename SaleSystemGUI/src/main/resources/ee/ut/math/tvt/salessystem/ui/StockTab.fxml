@@ -47,7 +47,6 @@
                      <TextField fx:id="quantityField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                      <TextField fx:id="nameField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                      <TextField fx:id="priceField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                     <Button fx:id="saveChanges" mnemonicParsing="false" onAction="#saveChangesButtonClicked" text="Save changes" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                      <Button fx:id="deleteProduct" mnemonicParsing="false" onAction="#deleteProductButtonClicked" text="Delete product" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
