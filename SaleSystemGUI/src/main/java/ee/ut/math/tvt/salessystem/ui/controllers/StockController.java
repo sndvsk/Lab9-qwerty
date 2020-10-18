@@ -9,9 +9,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -74,17 +72,43 @@ public class StockController implements Initializable {
         log.info("Add new products");
         //refreshStockItems();
 
+        String name = "";
+        double price = 0;
+        int quantity = 0;
+
+        // Try to get the data from the fields, alert the user, if anything went wrong
         try {
-            if (barCodeField.getText().equals("") || barCodeField.getText() == null) {
-                StockItem newItem = new StockItem(generateBarcode(), nameField.getText(), "description", Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()));
-                warehouseStock.addItem(newItem);
-            } else {
-                long barCode = Long.parseLong(barCodeField.getText());
-                StockItem newItem = new StockItem(barCode, nameField.getText(), getStockItemByBarcode().getDescription(), Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()));
-                warehouseStock.updateItem(newItem);
+            name = nameField.getText();
+            price = Double.parseDouble(priceField.getText());
+            quantity = Integer.parseInt(quantityField.getText());
+        } catch (NumberFormatException e) {
+            log.info("Error: False data inserted, wrong format or left empty");
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Information in wrong format", ButtonType.OK);
+            errorAlert.setHeaderText("Add product");
+            errorAlert.showAndWait();
+        }
+
+        // Check if quantity or price is negative
+        if (quantity < 0 || price < 0) {
+            log.info("Error: Negative value inserted");
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR, "These values cannot be negative: quantity, price", ButtonType.OK);
+            errorAlert.setHeaderText("Add product");
+            errorAlert.showAndWait();
+        } else {
+            // Try to add or update the product
+            try {
+                if (barCodeField.getText().equals("") || barCodeField.getText() == null) {
+                    StockItem newItem = new StockItem(generateBarcode(), name, "description", price, quantity);
+                    warehouseStock.addItem(newItem);
+                } else {
+                    long barCode = Long.parseLong(barCodeField.getText());
+                    StockItem newItem = new StockItem(barCode, name, getStockItemByBarcode().getDescription(), price, quantity);
+                    warehouseStock.updateItem(newItem);
+                }
+            } catch (NullPointerException | SalesSystemException e) {
+//                log.error(e.getMessage(), e);
+                log.info("Error: Could not add or update the product");
             }
-        } catch (NullPointerException | SalesSystemException e) {
-            log.error(e.getMessage(), e);
         }
         refreshStockItems();
         // TODO
