@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.salessystem.dto;
 
+import ee.ut.math.tvt.salessystem.SalesSystemException;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,16 +19,22 @@ public class Team {
 
 
 
-    public Team() throws IOException {
+    public Team() {
         Properties properties = new Properties();
         Path propFile = Paths.get("../src/main/resources/application.properties");
-        properties.load(Files.newBufferedReader(propFile));
+        try {
+            properties.load(Files.newBufferedReader(propFile));
+
+        } catch (IOException e) {
+            throw new SalesSystemException(e.getMessage());
+        }
         teamName = (properties.getProperty("teamName"));
         teamLeader = (properties.getProperty("teamLeader"));
         teamLeaderEmail = (properties.getProperty("teamLeaderEmail"));
         teamMember1 = (properties.getProperty("teamMember1"));
         teamMember2 = (properties.getProperty("teamMember2"));
         teamMember3 = (properties.getProperty("teamMember3"));
+
 
     }
 
