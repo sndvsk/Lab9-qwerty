@@ -38,6 +38,30 @@ public class Team {
 
     }
 
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public String getTeamLeader() {
+        return teamLeader;
+    }
+
+    public String getTeamLeaderEmail() {
+        return teamLeaderEmail;
+    }
+
+    public String getTeamMember1() {
+        return teamMember1;
+    }
+
+    public String getTeamMember2() {
+        return teamMember2;
+    }
+
+    public String getTeamMember3() {
+        return teamMember3;
+    }
+
     @Override
     public String toString() {
         return "Team: \n" +
