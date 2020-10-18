@@ -24,6 +24,7 @@ Development Environment (weeks 6 & 7)
 
 I hope this creates a merge 
 conflict
+* https://bitbucket.org/gerlik/lab9-qwerty/commits/tag/homework-3
 
 ## Homework 4:
 Development - Phase I (weeks 8 & 9) 
