@@ -6,6 +6,7 @@ import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
+import ee.ut.math.tvt.salessystem.dto.Team;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,10 +24,12 @@ public class ConsoleUI {
 
     private final SalesSystemDAO dao;
     private final ShoppingCart cart;
+    private Team team;
 
     public ConsoleUI(SalesSystemDAO dao) {
         this.dao = dao;
         cart = new ShoppingCart(dao);
+        team = new Team();
     }
 
     public static void main(String[] args) throws Exception {
@@ -74,6 +77,12 @@ public class ConsoleUI {
         System.out.println("-------------------------");
     }
 
+    private void showTeam() {
+        System.out.println("-------------------------");
+        System.out.println(team.toString());
+        System.out.println("-------------------------");
+    }
+
     private void printUsage() {
         System.out.println("-------------------------");
         System.out.println("Usage:");
@@ -83,6 +92,7 @@ public class ConsoleUI {
         System.out.println("a IDX NR \tAdd NR of stock item with index IDX to the cart");
         System.out.println("p\t\tPurchase the shopping cart");
         System.out.println("r\t\tReset the shopping cart");
+        System.out.println("t\t\tShow team information");
         System.out.println("-------------------------");
     }
 
@@ -114,9 +124,14 @@ public class ConsoleUI {
             } catch (SalesSystemException | NoSuchElementException e) {
                 log.error(e.getMessage(), e);
             }
-        } else {
+        }
+        else if (c[0].equals("t"))
+            showTeam();
+        else {
             System.out.println("unknown command");
         }
     }
+
+
 
 }
