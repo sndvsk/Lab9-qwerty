@@ -9,6 +9,6 @@ public class NegativePriceException extends Exception {
 
     @Override
     public String toString() {
-        return "Price can't be negative" + Price;
+        return "Price can't be negative: " + Price;
     }
 }
