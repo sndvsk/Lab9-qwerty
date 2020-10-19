@@ -1,8 +1,25 @@
 apply plugin: 'java'
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+version = '1.0'
+
+repositories {
+    mavenCentral()
 }
 
-version = '1.0'
+dependencies {
+    compile("org.yaml:snakeyaml:1.23")
+    testCompile("junit:junit:4.+")
+}
+
+test {
+    reports {
+        junitXml.enabled = true
+        html.enabled = false
+    }
+
+    testResultsDirName = file("shippable/testresults")
+    testReportDirName = file("shippable/testresults")
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
