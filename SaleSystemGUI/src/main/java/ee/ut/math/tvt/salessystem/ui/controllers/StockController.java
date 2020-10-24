@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
+import ee.ut.math.tvt.salessystem.NegativePriceException;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
@@ -72,43 +73,22 @@ public class StockController implements Initializable {
         log.info("Add new products");
         //refreshStockItems();
 
-        String name = "";
-        double price = 0;
-        int quantity = 0;
-
         // Try to get the data from the fields, alert the user, if anything went wrong
         try {
-            name = nameField.getText();
-            price = Double.parseDouble(priceField.getText());
-            quantity = Integer.parseInt(quantityField.getText());
+            warehouseStock.addItem(nameField.getText(), priceField.getText(), quantityField.getText(), barCodeField.getText());
         } catch (NumberFormatException e) {
             log.info("Error: False data inserted, wrong format or left empty");
             Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Information in wrong format", ButtonType.OK);
             errorAlert.setHeaderText("Add product");
             errorAlert.showAndWait();
-        }
-
-        // Check if quantity or price is negative
-        if (quantity < 0 || price < 0) {
+        } catch (NegativePriceException e){  // | NegativeAmountException
             log.info("Error: Negative value inserted");
             Alert errorAlert = new Alert(Alert.AlertType.ERROR, "These values cannot be negative: quantity, price", ButtonType.OK);
             errorAlert.setHeaderText("Add product");
             errorAlert.showAndWait();
-        } else {
-            // Try to add or update the product
-            try {
-                if (barCodeField.getText().equals("") || barCodeField.getText() == null) {
-                    StockItem newItem = new StockItem(generateBarcode(), name, "description", price, quantity);
-                    warehouseStock.addItem(newItem);
-                } else {
-                    long barCode = Long.parseLong(barCodeField.getText());
-                    StockItem newItem = new StockItem(barCode, name, getStockItemByBarcode().getDescription(), price, quantity);
-                    warehouseStock.updateItem(newItem);
-                }
-            } catch (NullPointerException | SalesSystemException e) {
+        } catch (NullPointerException | SalesSystemException e) {
 //                log.error(e.getMessage(), e);
-                log.info("Error: Could not add or update the product");
-            }
+            log.info("Error: Could not add or update the product");
         }
         refreshStockItems();
         // TODO
@@ -121,7 +101,7 @@ public class StockController implements Initializable {
         log.info("Deleting a product");
         long barCode = Long.parseLong(barCodeField.getText());
         // For now quantity = 1, if user does not insert it, it throws an error, quantity doesn't matter because this method deletes all of the item the data
-        StockItem item = new StockItem(barCode, nameField.getText(), getStockItemByBarcode().getDescription(), Double.parseDouble(priceField.getText()), 1);
+        StockItem item = new StockItem(barCode, nameField.getText(), dao.getStockItemByBarcode(barCodeField.getText()).getDescription(), Double.parseDouble(priceField.getText()), 1);
         warehouseStock.deleteItem(item);
         refreshStockItems();
     }
@@ -148,14 +128,10 @@ public class StockController implements Initializable {
         warehouseTableView.refresh();
     }
 
-    // SE-15 barCodeField automatically generated
-    private Long generateBarcode() {
-        Long last = dao.lastStockItem();
-        return last + 1;
-    }
+
 
     private void fillInputsBySelectedStockItem() {
-        StockItem stockItem = getStockItemByBarcode();
+        StockItem stockItem = dao.getStockItemByBarcode(barCodeField.getText());
         if (stockItem != null) {
             nameField.setText(stockItem.getName());
             priceField.setText(String.valueOf(stockItem.getPrice()));
@@ -164,16 +140,7 @@ public class StockController implements Initializable {
         }
     }
 
-    // Search the warehouse for a StockItem with the bar code entered
-    // to the barCode textfield.
-    private StockItem getStockItemByBarcode() {
-        try {
-            long code = Long.parseLong(barCodeField.getText());
-            return dao.findStockItem(code);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
+
 
     // Enable buttons like this
     private void enableInputs() {

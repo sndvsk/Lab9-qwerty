@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui;
 
+import ee.ut.math.tvt.salessystem.NegativePriceException;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
@@ -44,7 +45,7 @@ public class ConsoleUI {
     /**
      * Run the sales system CLI.
      */
-    public void run() throws IOException {
+    public void run() throws IOException, NegativePriceException {
         System.out.println("===========================");
         System.out.println("=       Sales System      =");
         System.out.println("===========================");
@@ -70,34 +71,17 @@ public class ConsoleUI {
         System.out.println("-------------------------");
     }
 
-    private void addToStock(StockItem si){
+    private void addToStock(String indx, String name, String price, String amount) throws NegativePriceException {
         System.out.println("-------------------------");
-        try {
-            StockItem item = dao.findStockItem(si.getId());
-            if (item != null && si.getName().equals(item.getName())) {
-                stock.updateItem(si);
-                System.out.println("Item " + si.toString() + " updated");
-            } else if(item == null) {
-                stock.addItem(si);
-                System.out.println("Item " + si.toString() + " added to stock");
-            } else {
-                System.out.println("no stock item with id " + si.getId());
-
-            }
-        } catch (SalesSystemException | NoSuchElementException e) {
-            log.error(e.getMessage(), e);
-        }
+        stock.addItem(name, price, amount, indx);
         System.out.println("-------------------------");
     }
 
     private void deleteFromStock(String id) {
-        try {
-            StockItem item = dao.findStockItem(Long.parseLong(id));
-            stock.deleteItem(item);
 
-        }  catch (SalesSystemException | NoSuchElementException e) {
-            log.error(e.getMessage(), e);
-        }
+        StockItem item = dao.findStockItem(Long.parseLong(id));
+        stock.deleteItem(item);
+
         System.out.println("-------------------------");
         System.out.println("Done");
         System.out.println("-------------------------");
@@ -125,7 +109,7 @@ public class ConsoleUI {
         System.out.println("Usage:");
         System.out.println("h\t\tShow this help");
         System.out.println("w\t\tShow warehouse contents");
-        System.out.println("aw IDX N D P Q\tAdd item 'N'name,  to stock");
+        System.out.println("aw IDX N P Q\tAdd item 'N'name,  to stock");
         System.out.println("d  IDX\tDelete item from stock by index IDX");
         System.out.println("c\t\tShow cart contents");
         System.out.println("a IDX NR \tAdd NR of stock item with index IDX to the cart");
@@ -135,7 +119,7 @@ public class ConsoleUI {
         System.out.println("-------------------------");
     }
 
-    private void processCommand(String command) {
+    private void processCommand(String command) throws NegativePriceException {
         String[] c = command.split(" ");
 
         if (c[0].equals("h"))
@@ -144,15 +128,9 @@ public class ConsoleUI {
             System.exit(0);
         else if (c[0].equals("w"))
             showStock();
-        else if (c[0].equals("aw")  && c.length == 6){
-                Long idx = Long.parseLong(c[1]);
-                String name = c[2];
-                String desc = c[3];
-                double price = Double.parseDouble(c[4]);
-                int quantity = Integer.parseInt(c[5]);
-                addToStock(new StockItem(idx, name, desc, price,quantity));
+        else if (c[0].equals("aw")  && c.length == 5){
+                addToStock(c[1], c[2], c[3], c[4]);
         }
-
 
         else if (c[0].equals("d") && c.length==2)
             deleteFromStock( c[1]);

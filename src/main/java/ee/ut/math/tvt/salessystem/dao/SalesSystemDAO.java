@@ -42,6 +42,8 @@ public interface SalesSystemDAO {
 
     void deleteStockItem(StockItem stockItem);
 
+    StockItem getStockItemByBarcode(String barCode);
+
     void beginTransaction();
 
     void rollbackTransaction();

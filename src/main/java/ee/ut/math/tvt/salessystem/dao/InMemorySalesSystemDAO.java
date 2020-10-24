@@ -70,6 +70,17 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         }
     }
 
+    // Search the warehouse for a StockItem with the bar code entered
+    // to the barCode textfield.
+    public StockItem getStockItemByBarcode(String barCode) {
+        try {
+            long code = Long.parseLong(barCode);
+            return findStockItem(code);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
     @Override
     public void beginTransaction() {
     }

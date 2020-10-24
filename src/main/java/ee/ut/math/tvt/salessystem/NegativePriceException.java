@@ -1,9 +1,9 @@
 package ee.ut.math.tvt.salessystem;
 
 public class NegativePriceException extends Exception {
-    int Price;
+    double Price;
 
-    public NegativePriceException(int price) {
+    public NegativePriceException(double price) {
         Price = price;
     }
 

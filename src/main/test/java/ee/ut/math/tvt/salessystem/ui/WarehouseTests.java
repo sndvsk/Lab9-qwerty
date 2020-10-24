@@ -1,4 +1,4 @@
-package ee.ut.math.tvt.salessystem.ui;
+package java.ee.ut.math.tvt.salessystem.ui;
 
 import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
