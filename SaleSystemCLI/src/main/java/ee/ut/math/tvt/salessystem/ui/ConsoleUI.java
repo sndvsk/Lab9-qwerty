@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui;
 
 import ee.ut.math.tvt.salessystem.NegativePriceException;
+import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
@@ -46,7 +47,7 @@ public class ConsoleUI {
     /**
      * Run the sales system CLI.
      */
-    public void run() throws IOException, NegativePriceException {
+    public void run() throws IOException, NegativePriceException, NegativeQuantityException {
         System.out.println("===========================");
         System.out.println("=       Sales System      =");
         System.out.println("===========================");
@@ -72,7 +73,7 @@ public class ConsoleUI {
         System.out.println("-------------------------");
     }
 
-    private void addToStock(String indx, String name, String price, String amount) throws NegativePriceException {
+    private void addToStock(String indx, String name, String price, String amount) throws NegativePriceException, NegativeQuantityException {
         System.out.println("-------------------------");
         stock.addItem(name, price, amount, indx);
         System.out.println("-------------------------");
@@ -120,7 +121,7 @@ public class ConsoleUI {
         System.out.println("-------------------------");
     }
 
-    private void processCommand(String command) throws NegativePriceException {
+    private void processCommand(String command) throws NegativePriceException, NegativeQuantityException {
         String[] c = command.split(" ");
 
         if (c[0].equals("h"))
