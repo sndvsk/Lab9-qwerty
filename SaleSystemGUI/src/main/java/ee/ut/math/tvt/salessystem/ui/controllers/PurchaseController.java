@@ -70,6 +70,7 @@ public class PurchaseController implements Initializable {
                 }
             }
         });
+        log.info("Initialize PurchaseController");
     }
 
     /** Event handler for the <code>new purchase</code> event. */

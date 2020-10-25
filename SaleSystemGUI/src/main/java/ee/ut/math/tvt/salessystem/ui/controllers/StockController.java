@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
 import ee.ut.math.tvt.salessystem.NegativePriceException;
+import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
@@ -61,6 +62,7 @@ public class StockController implements Initializable {
             }
         });
         refreshStockItems();
+        log.info("Initialize StockController");
         // TODO refresh view after adding new items
     }
 
@@ -77,18 +79,20 @@ public class StockController implements Initializable {
         try {
             warehouseStock.addItem(nameField.getText(), priceField.getText(), quantityField.getText(), barCodeField.getText());
         } catch (NumberFormatException e) {
-            log.info("Error: False data inserted, wrong format or left empty");
+            log.error("Error: False data inserted, wrong format or left empty");
             Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Information in wrong format", ButtonType.OK);
             errorAlert.setHeaderText("Add product");
             errorAlert.showAndWait();
         } catch (NegativePriceException e){  // | NegativeAmountException
-            log.info("Error: Negative value inserted");
+            log.error("Error: Negative value inserted");
             Alert errorAlert = new Alert(Alert.AlertType.ERROR, "These values cannot be negative: quantity, price", ButtonType.OK);
             errorAlert.setHeaderText("Add product");
             errorAlert.showAndWait();
         } catch (NullPointerException | SalesSystemException e) {
 //                log.error(e.getMessage(), e);
-            log.info("Error: Could not add or update the product");
+            log.error("Error: Could not add or update the product");
+        } catch (NegativeQuantityException e) {
+            e.printStackTrace();
         }
         refreshStockItems();
         // TODO
@@ -126,6 +130,7 @@ public class StockController implements Initializable {
     private void refreshStockItems() {
         warehouseTableView.setItems(FXCollections.observableList(dao.findStockItems()));
         warehouseTableView.refresh();
+        log.info("StockItemsList Refreshed");
     }
 
 
