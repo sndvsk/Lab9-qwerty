@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
 import ee.ut.math.tvt.salessystem.NegativePriceException;
+import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
@@ -90,6 +91,8 @@ public class StockController implements Initializable {
         } catch (NullPointerException | SalesSystemException e) {
 //                log.error(e.getMessage(), e);
             log.error("Error: Could not add or update the product");
+        } catch (NegativeQuantityException e) {
+            e.printStackTrace();
         }
         refreshStockItems();
         // TODO
