@@ -52,7 +52,6 @@ public class StockController implements Initializable {
 //        barCodeField.setDisable(true);
 //        disableProductField();
         // warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
-        log.info("Initialize StockController");
         this.barCodeField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
@@ -62,6 +61,7 @@ public class StockController implements Initializable {
             }
         });
         refreshStockItems();
+        log.info("Initialize StockController");
         // TODO refresh view after adding new items
     }
 

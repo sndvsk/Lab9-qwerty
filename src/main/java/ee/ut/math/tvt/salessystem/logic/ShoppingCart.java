@@ -49,7 +49,7 @@ public class ShoppingCart {
         try {
             for (SoldItem item : items) {
                 dao.saveSoldItem(item);
-                //log.info("Added "  + item.getName() + " to shopping cart.");
+                log.info("Added "  + item.getName() + " to shopping cart.");
             }
             dao.commitTransaction();
             items.clear();

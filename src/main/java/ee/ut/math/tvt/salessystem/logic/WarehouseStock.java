@@ -4,12 +4,15 @@ import ee.ut.math.tvt.salessystem.NegativePriceException;
 import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WarehouseStock {
 
+    private static final Logger log = LogManager.getLogger(ShoppingCart.class);
     private final SalesSystemDAO dao;
     private final List<StockItem> stockItems = new ArrayList<>();
 
@@ -39,12 +42,13 @@ public class WarehouseStock {
         if (barCodeS.equals("") || barCodeS == null) {
             StockItem newItem = new StockItem(generateBarcode(), name, "description", price, quantity);
             dao.saveStockItem(newItem);
+            log.debug("Added " + newItem.getName() + " quantity of " + newItem.getQuantity());
         } else {
             long barCode = Long.parseLong(barCodeS);
             StockItem newItem = new StockItem(barCode, name, dao.getStockItemByBarcode(barCodeS).getDescription(), price, quantity);
             updateItem(newItem);
+            log.debug("Updated " + newItem.getName() + " quantity of " + newItem.getQuantity());
         }
-        //log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
     }
 
     // If stockItem already exists don't save it as a new item,
@@ -53,11 +57,13 @@ public class WarehouseStock {
         Long id = item.getId();
         if (dao.findStockItem(id).getId().equals(item.getId())) {
             dao.updateStockItem(item);
+            log.info("Updated item " + item.getName() + " with id " + item.getId());
         }
     }
 
     public void deleteItem(StockItem item){
         dao.deleteStockItem(item);
+        log.info("Deleted product: " + item.getName());
     }
     public void deleteProduct(){
 
@@ -69,6 +75,7 @@ public class WarehouseStock {
 
     // SE-15 barCodeField automatically generated
     private Long generateBarcode() {
+        log.info("Generating barcode");
         Long last = dao.lastStockItem();
         return last + 1;
     }

@@ -40,6 +40,7 @@ public class ConsoleUI {
         SalesSystemDAO dao = new InMemorySalesSystemDAO();
         ConsoleUI console = new ConsoleUI(dao);
         console.run();
+        log.info("Console initialized.");
     }
 
     /**
