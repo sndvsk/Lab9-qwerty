@@ -1,6 +1,6 @@
 package ee.ut.math.tvt.salessystem;
 
-public class NegativeQuantityException {
+public class NegativeQuantityException extends Exception {
     int Quantity;
 
     public NegativeQuantityException(int quantity) {

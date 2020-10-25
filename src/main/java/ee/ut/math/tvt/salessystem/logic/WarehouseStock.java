@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.logic;
 
 import ee.ut.math.tvt.salessystem.NegativePriceException;
+import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
@@ -21,7 +22,7 @@ public class WarehouseStock {
     }
 
     // Add completely new StockItem
-    public void addItem(String name, String priceS, String quantityS, String barCodeS) throws NumberFormatException, NegativePriceException {
+    public void addItem(String name, String priceS, String quantityS, String barCodeS) throws NumberFormatException, NegativePriceException, NegativeQuantityException {
         // TODO verify that warehouse items' quantity remains at least zero or throw an exception
         double price = 0;
         int quantity = 0;
@@ -31,9 +32,11 @@ public class WarehouseStock {
 
 
         // Check if quantity or price is negative
-        if(price < 0 ) throw new NegativePriceException(price);
-        if(quantity < 0) {
-            // throw new NegativeAmountException(quantity);
+        if (price < 0) {
+            throw new NegativePriceException(price);
+        }
+        if (quantity < 0) {
+             throw new NegativeQuantityException(quantity);
         }
         // TODO check exceptions by find
         // TODO check if bar code and name
