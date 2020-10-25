@@ -52,6 +52,7 @@ public class StockController implements Initializable {
 //        barCodeField.setDisable(true);
 //        disableProductField();
         // warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
+        log.info("Initialize StockController");
         this.barCodeField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
@@ -77,18 +78,18 @@ public class StockController implements Initializable {
         try {
             warehouseStock.addItem(nameField.getText(), priceField.getText(), quantityField.getText(), barCodeField.getText());
         } catch (NumberFormatException e) {
-            log.info("Error: False data inserted, wrong format or left empty");
+            log.error("Error: False data inserted, wrong format or left empty");
             Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Information in wrong format", ButtonType.OK);
             errorAlert.setHeaderText("Add product");
             errorAlert.showAndWait();
         } catch (NegativePriceException e){  // | NegativeAmountException
-            log.info("Error: Negative value inserted");
+            log.error("Error: Negative value inserted");
             Alert errorAlert = new Alert(Alert.AlertType.ERROR, "These values cannot be negative: quantity, price", ButtonType.OK);
             errorAlert.setHeaderText("Add product");
             errorAlert.showAndWait();
         } catch (NullPointerException | SalesSystemException e) {
 //                log.error(e.getMessage(), e);
-            log.info("Error: Could not add or update the product");
+            log.error("Error: Could not add or update the product");
         }
         refreshStockItems();
         // TODO
@@ -126,6 +127,7 @@ public class StockController implements Initializable {
     private void refreshStockItems() {
         warehouseTableView.setItems(FXCollections.observableList(dao.findStockItems()));
         warehouseTableView.refresh();
+        log.info("StockItemsList Refreshed");
     }
 
 
