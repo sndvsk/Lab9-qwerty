@@ -43,6 +43,9 @@
                         <ColumnConstraints />
                         <ColumnConstraints />
                         <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -58,6 +61,9 @@
                         <RowConstraints />
                         <RowConstraints />
                         <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
               </rowConstraints>
               <children>
                 <Label text="Bar Code:" />
@@ -69,6 +75,8 @@
                 <TextField fx:id="quantityField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <TextField fx:id="priceField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label fx:id="totalSum" text="0.0" GridPane.columnIndex="3" GridPane.rowIndex="3"  />
+                <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="78.0" text="Total sum:" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="3" />
               </children>
             </GridPane>
           </content>
@@ -97,6 +105,11 @@
                 <TableColumn text="Quantity">
                   <cellValueFactory>
                     <PropertyValueFactory property="quantity" />
+                  </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Sum">
+                  <cellValueFactory>
+                    <PropertyValueFactory property="sum" />
                   </cellValueFactory>
                 </TableColumn>
               </columns>

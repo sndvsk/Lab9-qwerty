@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import org.apache.logging.log4j.LogManager;
@@ -48,6 +49,8 @@ public class PurchaseController implements Initializable {
     @FXML
     private Button addItemButton;
     @FXML
+    private Label totalSum;
+    @FXML
     private TableView<SoldItem> purchaseTableView;
 
     public PurchaseController(SalesSystemDAO dao, ShoppingCart shoppingCart) {
@@ -73,7 +76,9 @@ public class PurchaseController implements Initializable {
         log.info("Initialize PurchaseController");
     }
 
-    /** Event handler for the <code>new purchase</code> event. */
+    /**
+     * Event handler for the <code>new purchase</code> event.
+     */
     @FXML
     protected void newPurchaseButtonClicked() {
         log.info("New sale process started");
@@ -93,6 +98,7 @@ public class PurchaseController implements Initializable {
         try {
             shoppingCart.cancelCurrentPurchase();
             disableInputs();
+            resetTotalSum();
             purchaseTableView.refresh();
         } catch (SalesSystemException e) {
             log.error(e.getMessage(), e);
@@ -109,6 +115,7 @@ public class PurchaseController implements Initializable {
             log.debug("Contents of the current basket:\n" + shoppingCart.getAll());
             shoppingCart.submitCurrentPurchase();
             disableInputs();
+            resetTotalSum();
             purchaseTableView.refresh();
         } catch (SalesSystemException e) {
             log.error(e.getMessage(), e);
@@ -169,8 +176,20 @@ public class PurchaseController implements Initializable {
                 quantity = 1;
             }
             shoppingCart.addItem(new SoldItem(stockItem, quantity));
+            refreshTotalSum(shoppingCart);
             purchaseTableView.refresh();
         }
+    }
+
+    // Update total sum
+    private void refreshTotalSum(ShoppingCart shoppingCart) {
+        String totalSumString = String.valueOf(shoppingCart.getTotalSum());
+        totalSum.setText(totalSumString);
+    }
+
+    // Reset total sum to 0.0
+    private void resetTotalSum() {
+        totalSum.setText("0.0");
     }
 
     /**
