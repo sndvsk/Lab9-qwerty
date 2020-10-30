@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui;
 
 import ee.ut.math.tvt.salessystem.NegativePriceException;
+import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
@@ -40,12 +41,13 @@ public class ConsoleUI {
         SalesSystemDAO dao = new InMemorySalesSystemDAO();
         ConsoleUI console = new ConsoleUI(dao);
         console.run();
+        log.info("Console initialized.");
     }
 
     /**
      * Run the sales system CLI.
      */
-    public void run() throws IOException, NegativePriceException {
+    public void run() throws IOException, NegativePriceException, NegativeQuantityException {
         System.out.println("===========================");
         System.out.println("=       Sales System      =");
         System.out.println("===========================");
@@ -78,7 +80,7 @@ public class ConsoleUI {
         } catch (NumberFormatException e) {
             log.info("Error: False data inserted, wrong format or left empty");
             System.out.println("Information in wrong format");
-        } catch (NegativePriceException e){  // | NegativeAmountException
+        } catch (NegativePriceException | NegativeQuantityException e ){  // | NegativeAmountException
             log.info("Error: Negative value inserted");
             System.out.println("These values cannot be negative: quantity, price");
         } catch (NullPointerException | SalesSystemException e) {
