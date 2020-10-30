@@ -87,7 +87,10 @@ public class StockController implements Initializable {
             errorAlert.setHeaderText("Add product");
             errorAlert.showAndWait();
         } catch (NullPointerException | SalesSystemException e) {
-//                log.error(e.getMessage(), e);
+            log.info("Error: No searched item in stock");
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Check ID field", ButtonType.OK);
+            errorAlert.setHeaderText("Add product");
+            errorAlert.showAndWait();
             log.info("Error: Could not add or update the product");
         }
         refreshStockItems();
