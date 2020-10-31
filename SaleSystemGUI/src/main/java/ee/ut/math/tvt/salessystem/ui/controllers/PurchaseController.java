@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
+import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
@@ -165,7 +166,7 @@ public class PurchaseController implements Initializable {
      * Add new item to the cart.
      */
     @FXML
-    public void addItemEventHandler() {
+    public void addItemEventHandler() throws NegativeQuantityException {
         // add chosen item to the shopping cart.
         StockItem stockItem = getStockItemByBarcode();
         if (stockItem != null) {
