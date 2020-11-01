@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
+import ee.ut.math.tvt.salessystem.NegativePriceException;
+import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
@@ -10,10 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -170,12 +169,32 @@ public class PurchaseController implements Initializable {
         StockItem stockItem = getStockItemByBarcode();
         if (stockItem != null) {
             int quantity;
+            double price = stockItem.getPrice();
             try {
+                price = Double.parseDouble(priceField.getText());
                 quantity = Integer.parseInt(quantityField.getText());
             } catch (NumberFormatException e) {
                 quantity = 1;
             }
-            shoppingCart.addItem(new SoldItem(stockItem, quantity));
+            if (price < 0) {
+                try {
+                    throw new NegativePriceException(price);
+                } catch (NegativePriceException e) {
+                    log.error("Error: Price can't be negative:" + price);
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Price cannot be negative: " + price, ButtonType.OK);
+                    errorAlert.setHeaderText("Add to cart");
+                    errorAlert.showAndWait();
+                }
+            }
+            stockItem.setPrice(price);
+            try {
+                shoppingCart.addItem(new SoldItem(stockItem, quantity));
+            } catch (NegativeQuantityException e) {
+                log.error("Error: Quantity can't be negative:" + quantity);
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Quantity cannot be negative: " + quantity, ButtonType.OK);
+                errorAlert.setHeaderText("Add to cart");
+                errorAlert.showAndWait();
+            }
             refreshTotalSum(shoppingCart);
             purchaseTableView.refresh();
         }

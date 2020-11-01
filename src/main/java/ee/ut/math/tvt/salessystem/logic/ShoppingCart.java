@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.logic;
 
+import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 
@@ -22,11 +23,29 @@ public class ShoppingCart {
     /**
      * Add new SoldItem to table.
      */
-    public void addItem(SoldItem item) {
-        // TODO In case such stockItem already exists increase the quantity of the existing stock
-        // TODO verify that warehouse items' quantity remains at least zero or throw an exception
-
-        items.add(item);
+    public void addItem(SoldItem item) throws NegativeQuantityException {
+        boolean itemAdded = false;
+        if (items.size() != 0) {
+            for (SoldItem listItem : items) {
+                if (listItem.getId().equals(item.getId())) {
+                    item.setQuantity(listItem.getQuantity() + item.getQuantity());
+                    if (item.getQuantity() < 0) {
+                        throw new NegativeQuantityException(item.getQuantity());
+                    }
+                    items.remove(listItem);
+                    items.add(item);
+                    log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
+                    itemAdded = true;
+                    break;
+                }
+            }
+            if (!itemAdded) {
+                items.add(item);
+                log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
+            }
+        } else {
+            items.add(item);
+        }
         log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
     }
 
