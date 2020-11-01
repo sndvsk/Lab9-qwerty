@@ -20,6 +20,7 @@ public class WarehouseStock {
 
     public WarehouseStock(SalesSystemDAO dao) {
         this.dao = dao;
+        this.stockItems.addAll(dao.findStockItems());
     }
 
 
