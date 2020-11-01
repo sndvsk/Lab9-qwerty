@@ -11,10 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -166,7 +163,7 @@ public class PurchaseController implements Initializable {
      * Add new item to the cart.
      */
     @FXML
-    public void addItemEventHandler() throws NegativeQuantityException {
+    public void addItemEventHandler()  {
         // add chosen item to the shopping cart.
         StockItem stockItem = getStockItemByBarcode();
         if (stockItem != null) {
@@ -176,7 +173,14 @@ public class PurchaseController implements Initializable {
             } catch (NumberFormatException e) {
                 quantity = 1;
             }
-            shoppingCart.addItem(new SoldItem(stockItem, quantity));
+            try {
+                shoppingCart.addItem(new SoldItem(stockItem, quantity));
+            } catch (NegativeQuantityException e) {
+                log.error("Error: Quantity can't be negative:" + quantity);
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Quantity cannot be negative: " + quantity, ButtonType.OK);
+                errorAlert.setHeaderText("Add to cart");
+                errorAlert.showAndWait();
+            }
             refreshTotalSum(shoppingCart);
             purchaseTableView.refresh();
         }

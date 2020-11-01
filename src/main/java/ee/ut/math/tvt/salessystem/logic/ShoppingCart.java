@@ -24,31 +24,24 @@ public class ShoppingCart {
      * Add new SoldItem to table.
      */
     public void addItem(SoldItem item) throws NegativeQuantityException {
-        // TODO In case such stockItem already exists increase the quantity of the existing stock
-        // TODO verify that warehouse items' quantity remains at least zero or throw an exception
         boolean itemAdded = false;
         if (items.size() != 0) {
-            try {
-                for (SoldItem listItem : items) {
-                    if (listItem.getId().equals(item.getId())) {
-                        item.setQuantity(listItem.getQuantity() + item.getQuantity());
-                        if (item.getQuantity() < 0) {
-                            log.error("Negative quantity - can't buy more than exists in the warehouse");
-                            throw new NegativeQuantityException(item.getQuantity());
-                        }
-                        items.remove(listItem);
-                        items.add(item);
-                        log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
-                        itemAdded = true;
-                        break;
+            for (SoldItem listItem : items) {
+                if (listItem.getId().equals(item.getId())) {
+                    item.setQuantity(listItem.getQuantity() + item.getQuantity());
+                    if (item.getQuantity() < 0) {
+                        throw new NegativeQuantityException(item.getQuantity());
                     }
-                }
-                if (!itemAdded) {
+                    items.remove(listItem);
                     items.add(item);
                     log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
+                    itemAdded = true;
+                    break;
                 }
-            } catch (NegativeQuantityException e) {
-                System.out.println(e);
+            }
+            if (!itemAdded) {
+                items.add(item);
+                log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
             }
         } else {
             items.add(item);
