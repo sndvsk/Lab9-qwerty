@@ -7,6 +7,7 @@ import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.util.Strings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,9 @@ public class WarehouseStock {
     // Add completely new StockItem
     public void addItem(String name, String priceS, String quantityS, String barCodeS) throws NumberFormatException, NegativePriceException, NegativeQuantityException {
         // TODO verify that warehouse items' quantity remains at least zero or throw an exception
-        double price = 0;
-        int quantity = 0;
 
-        price = Double.parseDouble(priceS);
-        quantity = Integer.parseInt(quantityS);
+        double price = Double.parseDouble(priceS);
+        int quantity = Integer.parseInt(quantityS);
 
 
         // Check if quantity or price is negative
@@ -43,15 +42,25 @@ public class WarehouseStock {
         // TODO check if bar code and name
         // Try to add or update the product
 
-        if (barCodeS.equals("") || barCodeS == null) {
+        if (Strings.isEmpty(barCodeS)) {
             StockItem newItem = new StockItem(generateBarcode(), name, "description", price, quantity);
             dao.saveStockItem(newItem);
             log.debug("Added " + newItem.getName() + " quantity of " + newItem.getQuantity());
         } else {
             long barCode = Long.parseLong(barCodeS);
-            StockItem newItem = new StockItem(barCode, name, dao.getStockItemByBarcode(barCodeS).getDescription(), price, quantity);
-            updateItem(newItem);
-            log.debug("Updated " + newItem.getName() + " quantity of " + newItem.getQuantity());
+            var existingItem = dao.getStockItemByBarcode(barCodeS);
+
+            if (existingItem != null) {
+                StockItem newItem = new StockItem(barCode, name,
+                        existingItem.getDescription(), price, quantity + existingItem.getQuantity());
+                updateItem(newItem);
+                log.debug("Updated {} quantity from {} to {}", newItem.getName(),
+                        existingItem.getQuantity(), newItem.getQuantity());
+            } else {
+                StockItem newItemWitBarcode = new StockItem(barCode, name, "description", price, quantity);
+                dao.saveStockItem(newItemWitBarcode);
+                log.debug("Added item with existing barcode {} quantity {}",  barCodeS, quantityS);
+            }
         }
     }
 
