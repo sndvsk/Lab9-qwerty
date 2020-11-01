@@ -80,6 +80,7 @@ public class WarehouseStock {
     }
 
     public List<StockItem> getAll() {
+        stockItems.addAll(dao.findStockItems());
         return stockItems;
     }
 

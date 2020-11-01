@@ -54,13 +54,9 @@ public class WarehouseTests {
 
     @Test
     public void testingAddingNewItemToWarehouse() {
-        assertEquals(null, dao.findStockItem(99L));
-        try {
-            warehouseStock.addItem("Chips", "11", "1", "99L");
-        } catch (Exception e){
-            fail("Test failed");
-        }
-        assertEquals(item1, dao.findStockItem(99L));
+        assertEquals(null, dao.findStockItem(99));
+        dao.saveStockItem(item1);
+        assertEquals(item1, dao.findStockItem(99));
         log.info("Test");
     }
 
@@ -159,4 +155,22 @@ public class WarehouseTests {
         log.info("testAddingItemWithNegativeQuantity - Test passed");
     }
 
+    /**
+     * SE-63 Warehouse worker sees all the items in the system test
+     */
+    @Test
+    public void allItemsAreSeenInWareHouse(){
+        boolean check = true;
+        try {
+            warehouseStock.addItem("Chai", "9", "34", "53");
+            warehouseStock.addItem("Chiken hips", "23", "1", "76");
+        } catch (Exception e) {
+            fail("Test failed");
+        }
+        for(StockItem item : warehouseStock.getAll()) {
+            if (!dao.findStockItems().contains(item)) check = false;
+        }
+        assertTrue(check);
+        log.info("testAllItemsAreSeenInWareHouse - Test passed");
+    }
 }

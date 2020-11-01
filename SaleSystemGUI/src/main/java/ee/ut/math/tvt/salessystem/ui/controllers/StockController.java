@@ -129,7 +129,7 @@ public class StockController implements Initializable {
     // SE-18 list refresh
     // SE-17 list of products
     private void refreshStockItems() {
-        warehouseTableView.setItems(FXCollections.observableList(dao.findStockItems()));
+        warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
         warehouseTableView.refresh();
         log.info("StockItemsList Refreshed");
     }
