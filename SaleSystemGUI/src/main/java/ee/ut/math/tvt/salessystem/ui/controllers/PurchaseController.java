@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
+import ee.ut.math.tvt.salessystem.NegativePriceException;
 import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
@@ -163,16 +164,29 @@ public class PurchaseController implements Initializable {
      * Add new item to the cart.
      */
     @FXML
-    public void addItemEventHandler()  {
+    public void addItemEventHandler() {
         // add chosen item to the shopping cart.
         StockItem stockItem = getStockItemByBarcode();
         if (stockItem != null) {
             int quantity;
+            double price = stockItem.getPrice();
             try {
+                price = Double.parseDouble(priceField.getText());
                 quantity = Integer.parseInt(quantityField.getText());
             } catch (NumberFormatException e) {
                 quantity = 1;
             }
+            if (price < 0) {
+                try {
+                    throw new NegativePriceException(price);
+                } catch (NegativePriceException e) {
+                    log.error("Error: Price can't be negative:" + price);
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Price cannot be negative: " + price, ButtonType.OK);
+                    errorAlert.setHeaderText("Add to cart");
+                    errorAlert.showAndWait();
+                }
+            }
+            stockItem.setPrice(price);
             try {
                 shoppingCart.addItem(new SoldItem(stockItem, quantity));
             } catch (NegativeQuantityException e) {
