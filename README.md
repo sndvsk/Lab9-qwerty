@@ -29,7 +29,7 @@ conflict
 ## Homework 4:
 Development - Phase I (weeks 8 & 9) 
 
-*
+* https://bitbucket.org/gerlik/lab9-qwerty/commits/tag/homework-4
 
 ## Homework 5:
 Development - Phase II (weeks 10 & 11) 
