@@ -22,19 +22,22 @@ public class WarehouseTests {
 
     @Test
     public void testingAddingNewItemToWarehouse() {
-        assertEquals(null, dao.findStockItem(99));
-        dao.saveStockItem(item1);
-        assertEquals(item1, dao.findStockItem(99));
+        assertEquals(null, dao.findStockItem(99L));
+        try {
+            warehouseStock.addItem("Chips", "11", "1", "99L");
+        } catch (Exception e){
+            fail("Test failed");
+        }
+        assertEquals(item1, dao.findStockItem(99L));
         log.info("Test");
     }
-/*
-    @Test (expected = NegativePriceException.class)
+
+    @Test
     public void testAddingItemWithNegativePrice() throws NegativePriceException {
+        assertEquals(item1, dao.findStockItem(99L));
         log.info("Test");
-
     }
 
- */
 
     // check that methods beginTransaction and commitTransaction are both called exactly once and that order
     @Test

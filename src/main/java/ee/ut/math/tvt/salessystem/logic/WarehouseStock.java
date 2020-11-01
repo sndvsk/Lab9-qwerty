@@ -21,6 +21,7 @@ public class WarehouseStock {
         this.dao = dao;
     }
 
+
     // Add completely new StockItem
     public void addItem(String name, String priceS, String quantityS, String barCodeS) throws NumberFormatException, NegativePriceException, NegativeQuantityException {
         // TODO verify that warehouse items' quantity remains at least zero or throw an exception
@@ -67,9 +68,6 @@ public class WarehouseStock {
     public void deleteItem(StockItem item){
         dao.deleteStockItem(item);
         log.info("Deleted product: " + item.getName());
-    }
-    public void deleteProduct(){
-
     }
 
     public List<StockItem> getAll() {
