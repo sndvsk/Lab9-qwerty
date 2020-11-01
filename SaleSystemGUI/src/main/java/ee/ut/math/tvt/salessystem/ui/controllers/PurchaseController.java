@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
+import ee.ut.math.tvt.salessystem.MaxQuantityExceededException;
 import ee.ut.math.tvt.salessystem.NegativePriceException;
 import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
@@ -173,27 +174,31 @@ public class PurchaseController implements Initializable {
             try {
                 price = Double.parseDouble(priceField.getText());
                 quantity = Integer.parseInt(quantityField.getText());
+                stockItem.setPrice(price);
+
             } catch (NumberFormatException e) {
                 quantity = 1;
             }
-            if (price < 0) {
-                try {
-                    throw new NegativePriceException(price);
-                } catch (NegativePriceException e) {
-                    log.error("Error: Price can't be negative:" + price);
-                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Price cannot be negative: " + price, ButtonType.OK);
-                    errorAlert.setHeaderText("Add to cart");
-                    errorAlert.showAndWait();
-                }
-            }
-            stockItem.setPrice(price);
             try {
                 shoppingCart.addItem(new SoldItem(stockItem, quantity));
+            } catch (MaxQuantityExceededException e) {
+                log.error("Warehouse quantity exceeded. Your quantity: " + quantity + " Warehouse quantity: " + stockItem.getQuantity());
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Warehouse quantity exceeded. Your quantity: " + quantity + " Warehouse quantity: " + stockItem.getQuantity(), ButtonType.OK);
+                errorAlert.setHeaderText("Add to cart");
+                errorAlert.showAndWait();
+                return;
             } catch (NegativeQuantityException e) {
-                log.error("Error: Quantity can't be negative:" + quantity);
+                log.error("Quantity cannot be negative:" + price);
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Quantity cannot be negative: " + quantity, ButtonType.OK);
                 errorAlert.setHeaderText("Add to cart");
                 errorAlert.showAndWait();
+                return;
+            } catch (NegativePriceException e) {
+                log.error("Price cannot be negative:" + price);
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Price cannot be negative: " + price, ButtonType.OK);
+                errorAlert.setHeaderText("Add to cart");
+                errorAlert.showAndWait();
+                return;
             }
             refreshTotalSum(shoppingCart);
             purchaseTableView.refresh();

@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.salessystem.logic;
 
+import ee.ut.math.tvt.salessystem.MaxQuantityExceededException;
+import ee.ut.math.tvt.salessystem.NegativePriceException;
 import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
@@ -7,6 +9,7 @@ import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +26,22 @@ public class ShoppingCart {
     /**
      * Add new SoldItem to table.
      */
-    public void addItem(SoldItem item) throws NegativeQuantityException {
+    public void addItem(SoldItem item) throws MaxQuantityExceededException, NegativeQuantityException, NegativePriceException {
+        StockItem stockItem = dao.findStockItem(item.getId());
+        int quantity = item.getQuantity();
+        double price = item.getPrice();
+//        try {
+        if (quantity > stockItem.getQuantity()) {
+            throw new MaxQuantityExceededException(quantity);
+        } else if (quantity <= 0) {
+            throw new NegativeQuantityException(quantity);
+        }
+        if (price <= 0) {
+            throw new NegativePriceException(price);
+        }
+        stockItem.setQuantity(stockItem.getQuantity() - quantity);
+//        }
+
         boolean itemAdded = false;
         if (items.size() != 0) {
             for (SoldItem listItem : items) {

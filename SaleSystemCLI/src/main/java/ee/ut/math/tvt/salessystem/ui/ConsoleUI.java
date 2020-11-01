@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui;
 
+import ee.ut.math.tvt.salessystem.MaxQuantityExceededException;
 import ee.ut.math.tvt.salessystem.NegativePriceException;
 import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
@@ -121,7 +122,7 @@ public class ConsoleUI {
         System.out.println("-------------------------");
     }
 
-    private void processCommand(String command) throws NegativePriceException, NegativeQuantityException {
+    private void processCommand(String command) throws NegativeQuantityException, NegativePriceException {
         String[] c = command.split(" ");
 
         if (c[0].equals("h"))
@@ -147,13 +148,19 @@ public class ConsoleUI {
                 long idx = Long.parseLong(c[1]);
                 int amount = Integer.parseInt(c[2]);
                 StockItem item = dao.findStockItem(idx);
-                if (item != null) {
+                if (item != null) {                         // TODO
                     cart.addItem(new SoldItem(item, Math.min(amount, item.getQuantity())));
                 } else {
                     System.out.println("no stock item with id " + idx);
                 }
             } catch (SalesSystemException | NoSuchElementException e) {
                 log.error(e.getMessage(), e);
+            } catch (MaxQuantityExceededException e) {
+                log.error("Quantity eceeded, warehouse has less of that item. " + e);
+            } catch (NegativeQuantityException e) {
+                log.error("Quantity cannot be negative");
+            } catch (NegativePriceException e) {
+                log.error("Price cannot be negative");
             }
         }
         else if (c[0].equals("t"))
