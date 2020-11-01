@@ -18,7 +18,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import java.util.List;
+// https://mvnrepository.com/artifact/org.mockito/mockito-core/3.6.0
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -135,7 +135,8 @@ public class WarehouseTests {
         verify(daoMock, times(1)).updateStockItem(any());
         log.info("testAddingExistingItem - Test passed");
 
-        //https://www.baeldung.com/mockito-series
+        // https://www.baeldung.com/mockito-series
+        // https://www.baeldung.com/mockito-callbacks
     }
 
     // check that adding an item with negative quantity results in an exception
