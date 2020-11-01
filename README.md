@@ -30,6 +30,7 @@ conflict
 Development - Phase I (weeks 8 & 9) 
 
 * https://bitbucket.org/gerlik/lab9-qwerty/commits/tag/homework-4
+* debugger - https://bitbucket.org/gerlik/lab9-qwerty/wiki/The%20debugger
 
 ## Homework 5:
 Development - Phase II (weeks 10 & 11) 
