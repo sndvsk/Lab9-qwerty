@@ -19,9 +19,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
@@ -46,9 +44,7 @@ public class PurchaseController implements Initializable {
     @FXML
     private TextField quantityField;
     @FXML
-    private TextField nameField;
-    @FXML
-    private ComboBox nameDropdownField;
+    private ComboBox<String> nameDropdownField;
     @FXML
     private TextField priceField;
     @FXML
@@ -75,6 +71,15 @@ public class PurchaseController implements Initializable {
             public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
                 if (!newPropertyValue) {
                     fillInputsBySelectedStockItem();
+                }
+            }
+        });
+        this.nameDropdownField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean
+                    newPropertyValue) {
+                if (!newPropertyValue) {
+                    fillInputsByNameDropdownField();
                 }
             }
         });
@@ -146,10 +151,29 @@ public class PurchaseController implements Initializable {
         disableProductField(true);
     }
 
+    // Fill other fields if item is selected by name
+    private void fillInputsByNameDropdownField() {
+        StockItem stockItem = new StockItem();
+        try {
+            long code = Long.parseLong(barCodeField.getText());
+            stockItem = dao.findStockItem(code);
+        } catch (NumberFormatException e) {
+            System.out.println("Cannot find item" + e);
+        }
+
+        if (stockItem != null) {
+            barCodeField.setText(String.valueOf(getStockItemByBarcode()));
+            priceField.setText(String.valueOf(stockItem.getPrice()));
+        } else {
+            resetProductField();
+        }
+    }
+
+    // Fill other fields if item is selected by barcode
     private void fillInputsBySelectedStockItem() {
         StockItem stockItem = getStockItemByBarcode();
         if (stockItem != null) {
-            nameField.setText(stockItem.getName());
+            nameDropdownField.getSelectionModel().select(stockItem.getName());
             priceField.setText(String.valueOf(stockItem.getPrice()));
         } else {
             resetProductField();
@@ -214,24 +238,16 @@ public class PurchaseController implements Initializable {
     // Populates stocks dropdown with item names
     private void populateNameDropdownField() {
         List<StockItem> stockItems = dao.getAllStockItems();
-        List<String> names = new ArrayList<>();
+        Map<Long, String> names = new HashMap<>();
+//        List<String> names = new ArrayList<>();
         for (StockItem item : stockItems) {
-            names.add(item.getName());
+//            names.add(item.getName());
+            names.put(item.getId(), item.getName());
         }
-        // Add items to fxml list
-        ObservableList<String> observableArrayList = FXCollections.observableArrayList(names);
+        // Add items to fxml observableList
+        ObservableList<String> observableArrayList = FXCollections.observableArrayList(names.values());
+//        ObservableMap<Long, String> observableArrayList = FXCollections.observableMap(names);
         nameDropdownField.setItems(observableArrayList); // Items visible in dropdown now
-        // TODO fill other fields if an item from dropdown is selected
-    }
-
-    // TODO Populate dropdown with selected value by barcode
-    private void populateNameDropdownByBarCode() {
-        StockItem stockItem = getStockItemByBarcode();
-        //        if (stockItem != null) {
-//            nameDropdown.setItems();
-//        } else {
-//            resetProductField();
-//        }
     }
 
     // Update total sum
@@ -252,7 +268,7 @@ public class PurchaseController implements Initializable {
         this.addItemButton.setDisable(disable);
         this.barCodeField.setDisable(disable);
         this.quantityField.setDisable(disable);
-        this.nameField.setDisable(disable);
+        this.nameDropdownField.setDisable(disable);
         this.priceField.setDisable(disable);
     }
 
@@ -262,7 +278,7 @@ public class PurchaseController implements Initializable {
     private void resetProductField() {
         barCodeField.setText("");
         quantityField.setText("1");
-        nameField.setText("");
+        nameDropdownField.getSelectionModel().select("");
         priceField.setText("");
     }
 }
