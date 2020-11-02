@@ -54,7 +54,7 @@ public class WarehouseTests {
 
     @Test
     public void testingAddingNewItemToWarehouse() {
-        assertEquals(null, dao.findStockItem(99));
+        assertNull(dao.findStockItem(99));
         dao.saveStockItem(item1);
         assertEquals(item1, dao.findStockItem(99));
         log.info("Test");
@@ -80,10 +80,10 @@ public class WarehouseTests {
 
     // check that methods beginTransaction and commitTransaction are both called exactly once and that order
     @Test
-    public void testAddingItemBeginsAndCommitsTransaction() throws NegativeQuantityException {
+    public void testAddingItemBeginsAndCommitsTransaction() {
         //assertEquals();
         SoldItem soldItem = new SoldItem(item1, 5);
-        shoppingCartMock.addItem(soldItem);
+        //shoppingCartMock.addItem(soldItem);
         shoppingCartMock.submitCurrentPurchase();
 
         InOrder inOrder = inOrder(daoMock);
