@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.dao;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +34,8 @@ public interface SalesSystemDAO {
     StockItem findStockItem(long id);
 
     Long lastStockItem();
+
+    ArrayList<StockItem> getAllStockItems();
 
     void saveStockItem(StockItem stockItem);
 

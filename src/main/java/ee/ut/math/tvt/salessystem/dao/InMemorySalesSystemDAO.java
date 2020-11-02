@@ -43,6 +43,11 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
 
     @Override
+    public ArrayList<StockItem> getAllStockItems() {
+        return new ArrayList<>(stockItemList);
+    }
+
+    @Override
     public void saveSoldItem(SoldItem item) {
         soldItemList.add(item);
     }

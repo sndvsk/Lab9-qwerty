@@ -38,6 +38,8 @@ public class StockController implements Initializable {
     @FXML
     private TextField nameField;
     @FXML
+    private ComboBox nameDropdownField;
+    @FXML
     private TextField priceField;
     @FXML
     private TableView<StockItem> warehouseTableView;

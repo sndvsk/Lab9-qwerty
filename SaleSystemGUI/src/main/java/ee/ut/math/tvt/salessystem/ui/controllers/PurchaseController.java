@@ -11,6 +11,7 @@ import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,6 +19,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -44,6 +47,8 @@ public class PurchaseController implements Initializable {
     private TextField quantityField;
     @FXML
     private TextField nameField;
+    @FXML
+    private ComboBox nameDropdownField;
     @FXML
     private TextField priceField;
     @FXML
@@ -84,6 +89,7 @@ public class PurchaseController implements Initializable {
         log.info("New sale process started");
         try {
             enableInputs();
+            populateNameDropdownField();
         } catch (SalesSystemException e) {
             log.error(e.getMessage(), e);
         }
@@ -203,6 +209,29 @@ public class PurchaseController implements Initializable {
             refreshTotalSum(shoppingCart);
             purchaseTableView.refresh();
         }
+    }
+
+    // Populates stocks dropdown with item names
+    private void populateNameDropdownField() {
+        List<StockItem> stockItems = dao.getAllStockItems();
+        List<String> names = new ArrayList<>();
+        for (StockItem item : stockItems) {
+            names.add(item.getName());
+        }
+        // Add items to fxml list
+        ObservableList<String> observableArrayList = FXCollections.observableArrayList(names);
+        nameDropdownField.setItems(observableArrayList); // Items visible in dropdown now
+        // TODO fill other fields if an item from dropdown is selected
+    }
+
+    // TODO Populate dropdown with selected value by barcode
+    private void populateNameDropdownByBarCode() {
+        StockItem stockItem = getStockItemByBarcode();
+        //        if (stockItem != null) {
+//            nameDropdown.setItems();
+//        } else {
+//            resetProductField();
+//        }
     }
 
     // Update total sum
