@@ -1,0 +1,3 @@
+g13:19:45.931 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - Begin of transaction
+p13:19:45.941 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - Added Chips to shopping cart.
+Š13:19:45.969 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - testAddingItemBeginsAndCommitsTransaction - Test passed

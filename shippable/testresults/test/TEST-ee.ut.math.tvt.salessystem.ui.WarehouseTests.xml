@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ee.ut.math.tvt.salessystem.ui.WarehouseTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-11-02T11:19:43" hostname="DESKTOP-47AU81N" time="2.543">
+  <properties/>
+  <testcase name="testAddingItemBeginsAndCommitsTransaction" classname="ee.ut.math.tvt.salessystem.ui.WarehouseTests" time="2.543"/>
+  <system-out><![CDATA[13:19:45.931 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - Begin of transaction
+13:19:45.941 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - Added Chips to shopping cart.
+13:19:45.969 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - testAddingItemBeginsAndCommitsTransaction - Test passed
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

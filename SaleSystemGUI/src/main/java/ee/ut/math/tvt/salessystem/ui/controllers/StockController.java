@@ -83,16 +83,17 @@ public class StockController implements Initializable {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Information in wrong format", ButtonType.OK);
             errorAlert.setHeaderText("Add product");
             errorAlert.showAndWait();
-        } catch (NegativePriceException e){  // | NegativeAmountException
+        } catch (NegativePriceException | NegativeQuantityException e){  // | NegativeAmountException
             log.error("Error: Negative value inserted");
             Alert errorAlert = new Alert(Alert.AlertType.ERROR, "These values cannot be negative: quantity, price", ButtonType.OK);
             errorAlert.setHeaderText("Add product");
             errorAlert.showAndWait();
         } catch (NullPointerException | SalesSystemException e) {
-//                log.error(e.getMessage(), e);
-            log.error("Error: Could not add or update the product");
-        } catch (NegativeQuantityException e) {
-            e.printStackTrace();
+            log.info("Error: No searched item in stock");
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Check ID field", ButtonType.OK);
+            errorAlert.setHeaderText("Add product");
+            errorAlert.showAndWait();
+            log.info("Error: Could not add or update the product");
         }
         refreshStockItems();
         // TODO
@@ -128,7 +129,7 @@ public class StockController implements Initializable {
     // SE-18 list refresh
     // SE-17 list of products
     private void refreshStockItems() {
-        warehouseTableView.setItems(FXCollections.observableList(dao.findStockItems()));
+        warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
         warehouseTableView.refresh();
         log.info("StockItemsList Refreshed");
     }
