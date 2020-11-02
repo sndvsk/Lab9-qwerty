@@ -1,3 +1,4 @@
-g13:19:45.931 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - Begin of transaction
-p13:19:45.941 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - Added Chips to shopping cart.
-Š13:19:45.969 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - testAddingItemBeginsAndCommitsTransaction - Test passed
+V13:43:59.506 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - Test
+s13:43:59.520 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - Updated item Lays chips with id 1
+~13:43:59.530 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - testAllItemsAreSeenInWareHouse - Test passed
+q13:43:59.533 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - testAddingNewItem - Test passed
