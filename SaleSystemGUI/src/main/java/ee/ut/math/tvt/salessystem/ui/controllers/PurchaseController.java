@@ -155,14 +155,17 @@ public class PurchaseController implements Initializable {
     private void fillInputsByNameDropdownField() {
         StockItem stockItem = new StockItem();
         try {
-            long code = Long.parseLong(barCodeField.getText());
+            // TODO does now work if IDs/barcodes are irregular
+            // TODO don't know how to fetch correct IDs; how to populate id/barcode AND item name together in populateNameDropdownField()
+            int index = nameDropdownField.getSelectionModel().getSelectedIndex() + 1;
+            long code = Long.parseLong(String.valueOf(index));
             stockItem = dao.findStockItem(code);
         } catch (NumberFormatException e) {
-            System.out.println("Cannot find item" + e);
+            System.out.println("Cannot find item  " + e);
         }
 
         if (stockItem != null) {
-            barCodeField.setText(String.valueOf(getStockItemByBarcode()));
+            barCodeField.setText(String.valueOf(stockItem.getId()));
             priceField.setText(String.valueOf(stockItem.getPrice()));
         } else {
             resetProductField();
@@ -237,15 +240,16 @@ public class PurchaseController implements Initializable {
 
     // Populates stocks dropdown with item names
     private void populateNameDropdownField() {
+        // TODO send id and name somehow so that it is possible to retrieve other data to fill other fileds
         List<StockItem> stockItems = dao.getAllStockItems();
-        Map<Long, String> names = new HashMap<>();
-//        List<String> names = new ArrayList<>();
+//        Map<Long, String> names = new HashMap<>();
+        List<String> names = new ArrayList<>();
         for (StockItem item : stockItems) {
-//            names.add(item.getName());
-            names.put(item.getId(), item.getName());
+            names.add(item.getName());
+//            names.put(item.getId(), item.getName());
         }
         // Add items to fxml observableList
-        ObservableList<String> observableArrayList = FXCollections.observableArrayList(names.values());
+        ObservableList<String> observableArrayList = FXCollections.observableArrayList(names);
 //        ObservableMap<Long, String> observableArrayList = FXCollections.observableMap(names);
         nameDropdownField.setItems(observableArrayList); // Items visible in dropdown now
     }
