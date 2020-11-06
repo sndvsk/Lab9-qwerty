@@ -74,16 +74,34 @@ public class ConsoleUI {
         System.out.println("-------------------------");
     }
 
-    private void addToStock(String indx, String name, String price, String amount) throws NegativePriceException, NegativeQuantityException {
+    private void addToStock(String indx, String name, String price, String amount) {
         System.out.println("-------------------------");
-        stock.addItem(name, price, amount, indx);
-        System.out.println("-------------------------");
-    }
+        try{
+            stock.addItem(name, price, amount, indx);
+        } catch (NumberFormatException e) {
+            log.info("Error: False data inserted, wrong format or left empty");
+            System.out.println("Information in wrong format");
+        } catch (NegativePriceException | NegativeQuantityException e ){  // | NegativeAmountException
+            log.info("Error: Negative value inserted");
+            System.out.println("These values cannot be negative: quantity, price");
+        } catch (NullPointerException | SalesSystemException e) {
+            log.info("Error: No searched item in stock");
+            System.out.println("Check ID field. Could not update the product");
+            log.info("Error: Could not add or update the product");
+        }
+            System.out.println("-------------------------");
+        }
 
     private void deleteFromStock(String id) {
 
-        StockItem item = dao.findStockItem(Long.parseLong(id));
-        stock.deleteItem(item);
+        try{
+            StockItem item = dao.findStockItem(Long.parseLong(id));
+            stock.deleteItem(item);
+        }catch (NullPointerException e){
+            log.info("Error: No searched item in stock");
+            System.out.println("Check ID field. Could not delete the product");
+            log.info("Error: Could not delete the product");
+        }
 
         System.out.println("-------------------------");
         System.out.println("Done");
@@ -121,8 +139,10 @@ public class ConsoleUI {
         System.out.println("t\t\tShow team information");
         System.out.println("-------------------------");
     }
-
+    
     private void processCommand(String command) throws NegativeQuantityException, NegativePriceException {
+
+
         String[] c = command.split(" ");
 
         if (c[0].equals("h"))
