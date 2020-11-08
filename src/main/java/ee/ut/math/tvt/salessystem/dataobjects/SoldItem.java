@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.dataobjects;
 
 
+
 /**
  * Already bought StockItem. SoldItem duplicates name and price for preserving history.
  */
