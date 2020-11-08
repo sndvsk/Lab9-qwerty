@@ -97,6 +97,11 @@ public class StockController implements Initializable {
         }
         refreshStockItems();
         // TODO
+
+        // FIXME
+        // kustutasin item barcodiga 1, vajutasin "add product" barcodiga 1
+        // pärast seda veel üks kord vajutasin "add product" sama item barcodiga 1
+        // item barcodiga 2 oli asendatud itemiga barcodiga 1
     }
 
     // Event handler for deleting a product from the system
@@ -129,7 +134,17 @@ public class StockController implements Initializable {
     // SE-18 list refresh
     // SE-17 list of products
     private void refreshStockItems() {
+        // FIXME
+        //   |
+        //   v
         warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
+        // iga kord lisab kõik olevat dao's items
+        // vist see getAll teeb igakord uut new ArrayList
+
+
+        //see on rida, mis oli varem ja töötas
+        //warehouseTableView.setItems(FXCollections.observableList(dao.findStockItems()));
+
         warehouseTableView.refresh();
         log.info("StockItemsList Refreshed");
     }
