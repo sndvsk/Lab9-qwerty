@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Table(name = "STOCKITEM")
 public class StockItem {
 
+
     private Long id;
     private String name;
     private double price;
