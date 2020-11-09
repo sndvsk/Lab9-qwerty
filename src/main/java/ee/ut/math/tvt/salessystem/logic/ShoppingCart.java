@@ -84,6 +84,12 @@ public class ShoppingCart {
     }
 
     public void cancelCurrentPurchase() {
+        //Siin peame tagastama stocki koik asjad, mis olid sisestatud, kui hakkame updatetima reaalajas stocki
+//        for (SoldItem item : items)
+//
+//            dao.updateStockItem(item.getStockItem());
+//            log.info("Returned " + item.getName() + " to shopping cart.");
+//        }
         items.clear();
         log.info("Current purchase cancelled");
     }
