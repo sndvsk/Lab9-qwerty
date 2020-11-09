@@ -134,17 +134,7 @@ public class StockController implements Initializable {
     // SE-18 list refresh
     // SE-17 list of products
     private void refreshStockItems() {
-        // FIXME
-        //   |
-        //   v
         warehouseTableView.setItems(FXCollections.observableList(warehouseStock.getAll()));
-        // iga kord lisab kõik olevat dao's items
-        // vist see getAll teeb igakord uut new ArrayList
-
-
-        //see on rida, mis oli varem ja töötas
-        //warehouseTableView.setItems(FXCollections.observableList(dao.findStockItems()));
-
         warehouseTableView.refresh();
         log.info("StockItemsList Refreshed");
     }
