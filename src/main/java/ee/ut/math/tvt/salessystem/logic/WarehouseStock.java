@@ -81,8 +81,7 @@ public class WarehouseStock {
     }
 
     public List<StockItem> getAll() {
-        stockItems.addAll(dao.findStockItems());
-        return stockItems;
+        return dao.findStockItems();
     }
 
     // SE-15 barCodeField automatically generated
