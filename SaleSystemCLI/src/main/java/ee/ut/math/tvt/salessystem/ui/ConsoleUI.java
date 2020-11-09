@@ -4,6 +4,7 @@ import ee.ut.math.tvt.salessystem.MaxQuantityExceededException;
 import ee.ut.math.tvt.salessystem.NegativePriceException;
 import ee.ut.math.tvt.salessystem.NegativeQuantityException;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
+import ee.ut.math.tvt.salessystem.dao.HibernateSalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
@@ -32,7 +33,8 @@ public class ConsoleUI {
     private Team team;
 
     public ConsoleUI(SalesSystemDAO dao) {
-        this.dao = dao;
+        //this.dao = dao;
+        this.dao = new HibernateSalesSystemDAO();
         cart = new ShoppingCart(dao);
         stock = new WarehouseStock(dao);
         team = new Team();
