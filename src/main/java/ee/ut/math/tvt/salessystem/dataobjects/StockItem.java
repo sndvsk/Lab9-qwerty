@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "STOCKITEM")
-public class StockItem {
+public class StockItem extends Item {
 
 
     private Long id;

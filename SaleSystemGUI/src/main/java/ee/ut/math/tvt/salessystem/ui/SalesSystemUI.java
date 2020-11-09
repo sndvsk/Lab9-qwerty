@@ -38,8 +38,8 @@ public class SalesSystemUI extends Application {
     private final WarehouseStock warehouseStock;
 
     public SalesSystemUI() {
-        dao = new InMemorySalesSystemDAO();
-        //dao = new HibernateSalesSystemDAO();
+        //dao = new InMemorySalesSystemDAO();
+        dao = new HibernateSalesSystemDAO();
         shoppingCart = new ShoppingCart(dao);
         warehouseStock = new WarehouseStock(dao);
     }
