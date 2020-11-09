@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ee.ut.math.tvt.salessystem.ui.WarehouseTests" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-11-02T11:52:11" hostname="Sanders-MacBook-Pro-3.local" time="0.54">
+<testsuite name="ee.ut.math.tvt.salessystem.ui.WarehouseTests" tests="1" skipped="1" failures="0" errors="0" timestamp="2020-11-02T11:50:22" hostname="Sanders-MacBook-Pro-3.local" time="2181.203">
   <properties/>
-  <testcase name="testAddingItemWithNegativePrice" classname="ee.ut.math.tvt.salessystem.ui.WarehouseTests" time="0.51"/>
-  <testcase name="testingAddingNewItemToWarehouse" classname="ee.ut.math.tvt.salessystem.ui.WarehouseTests" time="0.006"/>
-  <testcase name="testAddingExistingItem" classname="ee.ut.math.tvt.salessystem.ui.WarehouseTests" time="0.016"/>
-  <testcase name="allItemsAreSeenInWareHouse" classname="ee.ut.math.tvt.salessystem.ui.WarehouseTests" time="0.0"/>
-  <testcase name="testAddingItemBeginsAndCommitsTransaction" classname="ee.ut.math.tvt.salessystem.ui.WarehouseTests" time="0.004"/>
-  <testcase name="testAddingItemWithNegativeQuantity" classname="ee.ut.math.tvt.salessystem.ui.WarehouseTests" time="0.001"/>
-  <testcase name="testAddingNewItem" classname="ee.ut.math.tvt.salessystem.ui.WarehouseTests" time="0.0"/>
-  <system-out><![CDATA[13:52:11.905 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - Test
-13:52:11.920 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - Updated item Lays chips with id 1
-13:52:11.924 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - testAddingExistingItem - Test passed
-13:52:11.925 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - testAllItemsAreSeenInWareHouse - Test passed
-13:52:11.926 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - Begin of transaction
-13:52:11.929 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - testAddingItemBeginsAndCommitsTransaction - Test passed
-13:52:11.931 [Test worker] INFO  ee.ut.math.tvt.salessystem.logic.ShoppingCart - testAddingNewItem - Test passed
-]]></system-out>
+  <testcase name="testAddingItemBeginsAndCommitsTransaction" classname="ee.ut.math.tvt.salessystem.ui.WarehouseTests" time="2181.203">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
