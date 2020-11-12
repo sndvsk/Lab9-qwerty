@@ -23,7 +23,7 @@ public class SoldItem {
 
     public SoldItem(StockItem stockItem, int quantity) {
         this.id = stockItem.getId();
-        this.stockItem = stockItem;
+        //this.stockItem = stockItem;
         this.name = stockItem.getName();
         this.price = stockItem.getPrice();
         this.quantity = quantity;
@@ -66,11 +66,12 @@ public class SoldItem {
     }
 
     public StockItem getStockItem() {
-        return stockItem;
+        return null;
+        //return stockItem;
     }
 
     public void setStockItem(StockItem stockItem) {
-        this.stockItem = stockItem;
+        //this.stockItem = stockItem;
     }
 
     @Override
