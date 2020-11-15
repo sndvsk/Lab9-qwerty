@@ -7,13 +7,21 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "STOCKITEM")
-public class StockItem {
+public class StockItem extends Item {
 
-
+    @Id
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "price")
     private double price;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "quantity")
     private int quantity;
 
     public StockItem() {

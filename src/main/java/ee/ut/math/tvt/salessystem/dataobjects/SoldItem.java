@@ -1,10 +1,15 @@
 package ee.ut.math.tvt.salessystem.dataobjects;
 
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Already bought StockItem. SoldItem duplicates name and price for preserving history.
  */
+//@Entity
+//@Table(name = "SOLDITEM")
+// extends Item
 public class SoldItem {
 
     private Long id;

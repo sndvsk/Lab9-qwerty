@@ -3,7 +3,7 @@ package ee.ut.math.tvt.salessystem.dataobjects;
 import javax.persistence.*;
 
 @Entity
-public class Item {
+public abstract class Item {
 
     @Id
     private Long id;
