@@ -1,5 +1,5 @@
 package ee.ut.math.tvt.salessystem.dataobjects;
-
+import javax.persistence.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -7,16 +7,29 @@ import javax.persistence.Table;
 /**
  * Already bought StockItem. SoldItem duplicates name and price for preserving history.
  */
-//@Entity
-//@Table(name = "SOLDITEM")
-// extends Item
-public class SoldItem {
+@Entity
+@Table(name = "SOLDITEM")
+public class SoldItem extends Item{
 
+    @Id
     private Long id;
-    private StockItem stockItem;
+
+    @Column(name = "name")
     private String name;
-    private Integer quantity;
+
+    @Column(name = "price")
     private double price;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "quantity")
+    private int quantity;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    @Column(name = "stock_item_id")
+    private StockItem stockItem;
 
     public SoldItem() {
     }
@@ -27,34 +40,6 @@ public class SoldItem {
         this.name = stockItem.getName();
         this.price = stockItem.getPrice();
         this.quantity = quantity;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
     }
 
     public void setQuantity(Integer quantity) {

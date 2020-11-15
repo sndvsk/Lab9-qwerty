@@ -6,19 +6,19 @@ import javax.persistence.*;
 public abstract class Item {
 
     @Id
-    private Long id;
+    protected Long id;
 
     @Column(name = "name")
-    private String name;
+    protected String name;
 
     @Column(name = "price")
-    private double price;
+    protected double price;
 
     @Column(name = "description")
-    private String description;
+    protected String description;
 
     @Column(name = "quantity")
-    private int quantity;
+    protected int quantity;
 
     public Item() {
     }
