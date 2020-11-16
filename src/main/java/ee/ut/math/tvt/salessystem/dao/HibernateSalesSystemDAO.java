@@ -107,4 +107,39 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     public void commitTransaction() {
         em.getTransaction().commit();
     }
+
+    @Override
+    public void savePurchase(Purchase p) {
+        beginTransaction();
+        em.persist(p);
+        commitTransaction();
+    }
+
+    @Override
+    public List<Purchase> getAllPurchases() {
+        return em.createQuery("from Purchase", Purchase.class).getResultList();
+    }
+
+    @Override
+    public ArrayList<Purchase> getLast10Purchases() {
+        ArrayList<Purchase> last10 = new ArrayList<>();
+        for (int i = purchases.size() - 10; i < purchases.size(); i++) {
+            last10.add(purchases.get(i));
+        }
+        return last10;
+    }
+
+    @Override
+    public Purchase findPurchaseById(long id) {
+        for (Purchase p : purchases) {
+            if (p.getId() == id)
+                return p;
+        }
+        return null;
+    }
+
+    @Override
+    public Long lastPurchase() {
+        return purchases.get(purchases.size() - 1).getId();
+    }
 }

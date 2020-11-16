@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.dao;
 
+import ee.ut.math.tvt.salessystem.dataobjects.Purchase;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 
@@ -11,6 +12,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
     private final List<StockItem> stockItemList;
     private final List<SoldItem> soldItemList;
+    private final List<Purchase> purchases;
 
     public InMemorySalesSystemDAO() {
         List<StockItem> items = new ArrayList<StockItem>();
@@ -20,6 +22,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         items.add(new StockItem(4L, "Free Beer", "Student's delight", 0.0, 100));
         this.stockItemList = items;
         this.soldItemList = new ArrayList<>();
+        this.purchases = new ArrayList<>();
     }
 
     @Override
@@ -96,5 +99,38 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
     @Override
     public void commitTransaction() {
+    }
+
+    @Override
+    public void savePurchase(Purchase p) {
+        purchases.add(p);
+    }
+
+    @Override
+    public ArrayList<Purchase> getAllPurchases() {
+        return new ArrayList<>(purchases);
+    }
+
+    @Override
+    public ArrayList<Purchase> getLast10Purchases() {
+        ArrayList<Purchase> last10 = new ArrayList<>();
+        for (int i = purchases.size() - 10; i < purchases.size(); i++) {
+            last10.add(purchases.get(i));
+        }
+        return last10;
+    }
+
+    @Override
+    public Purchase findPurchaseById(long id) {
+        for (Purchase p : purchases) {
+            if (p.getId() == id)
+                return p;
+        }
+        return null;
+    }
+
+    @Override
+    public Long lastPurchase() {
+        return purchases.get(purchases.size() - 1).getId();
     }
 }
