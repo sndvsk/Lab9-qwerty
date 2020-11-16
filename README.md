@@ -40,7 +40,7 @@ Development - Phase II (weeks 10 & 11)
 ## Homework 6:
 Automatic Unit Tests, Refactoring & (System-level) Functional Test Planning (weeks 12 & 13) 
 
-*
+* Test plan & 5 test cases: https://docs.google.com/spreadsheets/d/1_iudZu1PZhFOrHwPai7TpC5DN64fU1tIJZ7Dx-MTnpE/edit?usp=sharing
 
 ## Homework 7:
 Functional and Non-Functional System Testing (weeks 14 & 15) 
