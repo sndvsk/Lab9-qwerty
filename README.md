@@ -35,7 +35,7 @@ Development - Phase I (weeks 8 & 9)
 ## Homework 5:
 Development - Phase II (weeks 10 & 11) 
 
-* https://bitbucket.org/gerlik/lab9-qwerty/commits/tag/homework5
+* https://bitbucket.org/gerlik/lab9-qwerty/commits/tag/homework5_new
 
 ## Homework 6:
 Automatic Unit Tests, Refactoring & (System-level) Functional Test Planning (weeks 12 & 13) 
