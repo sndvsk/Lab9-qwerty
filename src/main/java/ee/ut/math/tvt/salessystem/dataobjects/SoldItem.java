@@ -12,9 +12,6 @@ public class SoldItem {
     private Integer quantity;
     private double price;
 
-    public SoldItem() {
-    }
-
     public SoldItem(StockItem stockItem, int quantity) {
         this.id = stockItem.getId();
         this.stockItem = stockItem;

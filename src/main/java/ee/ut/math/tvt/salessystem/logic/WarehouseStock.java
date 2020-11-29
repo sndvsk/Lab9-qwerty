@@ -2,7 +2,6 @@ package ee.ut.math.tvt.salessystem.logic;
 
 import ee.ut.math.tvt.salessystem.NegativePriceException;
 import ee.ut.math.tvt.salessystem.NegativeQuantityException;
-import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import org.apache.logging.log4j.LogManager;
