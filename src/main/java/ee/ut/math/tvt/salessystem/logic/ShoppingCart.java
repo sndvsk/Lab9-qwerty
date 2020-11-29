@@ -71,6 +71,11 @@ public class ShoppingCart {
         return items;
     }
 
+    // For testing
+    public int getItemQuantity(SoldItem item){
+        return item.getQuantity();
+    }
+
     public double getTotalSum() {
         List<Double> prices = new ArrayList<>();
         double totalSum = 0.0;

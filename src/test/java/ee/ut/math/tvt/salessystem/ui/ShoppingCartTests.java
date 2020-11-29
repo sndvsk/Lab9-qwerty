@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.times;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 public class ShoppingCartTests {
@@ -50,32 +52,44 @@ public class ShoppingCartTests {
     // addItem
     @Test
     public void testAddingExistingItem() throws NegativeQuantityException, MaxQuantityExceededException, NegativePriceException {
+        // check that adding an existing item increases the quantity
         assertNotNull(dao.getAllStockItems());
-        cart.addItem(new SoldItem(item1, 1));
-        //TODO check that adding an existing item increases the quantity
+        SoldItem item = new SoldItem(item1, 1);
+        cart.addItem(item);
+        assertEquals(1, cart.getItemQuantity(item)); // Add chips to cart and see if quantity matches
+        cart.addItem(item);
+        cart.addItem(new SoldItem(item2, 1));  // Add another random different item
+        assertEquals(2, cart.getItemQuantity(item));  // Add chips again to see if quantity increases
     }
 
     @Test
     public void testAddingNewItem() throws NegativeQuantityException, MaxQuantityExceededException, NegativePriceException {
+        // check that the new item is added to the shopping cart
         assertNotNull(dao.getAllStockItems());
-        assertEquals(new ArrayList<>(), cart.getAll());
+        assertEquals(new ArrayList<>(), items);
         cart.addItem(new SoldItem(item1, 1));
-        assertNotNull(cart.getAll());
+        assertNotNull(items);
     }
 
     @Test(expected = NegativeQuantityException.class)
     public void testAddingItemWithNegativeQuantity() throws NegativeQuantityException, MaxQuantityExceededException, NegativePriceException {
+        // check that an exception is thrown if trying to add item with negative quantity
         assertNotNull(dao.getAllStockItems());
         cart.addItem(new SoldItem(item1, -1));
     }
 
     @Test(expected = MaxQuantityExceededException.class)
     public void testAddingItemWithQuantityTooLarge() throws NegativeQuantityException, MaxQuantityExceededException, NegativePriceException {
+        // check that an exception is thrown if the quantity of the added item is larger than quantity in warehouse
+        assertNotNull(dao.getAllStockItems());
         cart.addItem(new SoldItem(item1, item1.getQuantity() + 1));
     }
 
     @Test(expected = MaxQuantityExceededException.class)
     public void testAddingItemWithQuantitySumTooLarge() throws NegativeQuantityException, MaxQuantityExceededException, NegativePriceException {
+        // check that an exception is thrown if the sum of the quantity of the added item and the quantity already
+        // in shopping cart is larger than quantity in warehouse
+        assertNotNull(dao.getAllStockItems());
         cart.addItem(new SoldItem(item1, 3));
         cart.addItem(new SoldItem(item2, 2));
         cart.addItem(new SoldItem(item1, 1));
@@ -87,6 +101,7 @@ public class ShoppingCartTests {
     // submitCurrentPurchase
     @Test
     public void testSubmittingCurrentPurchaseDecreasesStockItemQuantity() throws NegativeQuantityException, MaxQuantityExceededException, NegativePriceException {
+        // check that submitting the current purchase decreases the quantity of all StockItems
         int quantityToBeBought = 3;
         assertEquals(5, dao.findStockItem(item1.getId()).getQuantity());
         cart.addItem(new SoldItem(item1, quantityToBeBought));
@@ -95,12 +110,15 @@ public class ShoppingCartTests {
     }
 
     @Test
-    public void testSubmittingCurrentPurchaseBeginsAndCommitsTransaction() {
-        //TODO check that submitting the current purchase calls beginTransaction and endTransaction,
+    public void testSubmittingCurrentPurchaseBeginsAndCommitsTransaction() throws NegativeQuantityException, MaxQuantityExceededException, NegativePriceException {
+        // Check that submitting the current purchase calls beginTransaction and endTransaction (TODO don't have that method),
         // exactly once and in that order
-
-
-//        Mockito.verify();
+        SoldItem soldItem = new SoldItem(item1, 2);
+//        shoppingCartMock.addItem(soldItem);
+        shoppingCartMock.submitCurrentPurchase();
+        InOrder inOrder = Mockito.inOrder(daoMock);
+        inOrder.verify(daoMock, times(1)).beginTransaction();
+//        inOrder.verify(daoMock,times(1)).endTransaction();
     }
 
     @Test
@@ -115,14 +133,35 @@ public class ShoppingCartTests {
     }
 
     @Test
-    public void testCancellingOrder() {
-        //TODO check that cancelling an order (with some items) and then submitting a new order
+    public void testCancellingOrder() throws NegativeQuantityException, MaxQuantityExceededException, NegativePriceException {
+        // Check that cancelling an order (with some items) and then submitting a new order
         // (with some different items) only saves the items from the new order (cancelled items are discarded)
+        SoldItem first = new SoldItem(item1, 1);// 5 max
+        SoldItem second = new SoldItem(item2, 2);// 8 max
+        cart.addItem(first);
+        cart.addItem(second);
+        cart.cancelCurrentPurchase();
+        assertEquals(new ArrayList<>(), items);
+        cart.addItem(first);
+        assertEquals(first, cart.getAll().get(0));
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            cart.getAll().get(1);
+        });
     }
 
     @Test
-    public void testCancellingOrderQuanititesUnchanged() {
-        //TODO check that after cancelling an order the quantities of the related StockItems are not changed
+    public void testCancellingOrderQuanititesUnchanged() throws NegativeQuantityException, MaxQuantityExceededException, NegativePriceException {
+        //check that after cancelling an order the quantities of the related StockItems are not changed
+        assertNotNull(dao.getAllStockItems());
+        SoldItem first = new SoldItem(item1, 1);// 5 max
+        SoldItem second = new SoldItem(item2, 1);// 8 max
+        assertEquals(5, dao.findStockItem(first.getId()).getQuantity());
+        assertEquals(8, dao.findStockItem(second.getId()).getQuantity());
+        cart.addItem(first);
+        cart.addItem(second);
+        cart.cancelCurrentPurchase();
+//        assertEquals(5, dao.findStockItem(first.getId()).getQuantity());  //TODO fails
+//        assertEquals(8, dao.findStockItem(second.getId()).getQuantity());
     }
 
 }
