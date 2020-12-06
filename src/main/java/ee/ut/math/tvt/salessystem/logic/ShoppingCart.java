@@ -27,20 +27,11 @@ public class ShoppingCart {
      * Add new SoldItem to table.
      */
     public void addItem(SoldItem item) throws MaxQuantityExceededException, NegativeQuantityException, NegativePriceException {
-        StockItem stockItem = dao.findStockItem(item.getId());
-        int quantity = item.getQuantity();
         double price = item.getPrice();
-//        try {
-        if (quantity > stockItem.getQuantity()) {
-            throw new MaxQuantityExceededException(quantity);
-        } else if (quantity <= 0) {
-            throw new NegativeQuantityException(quantity);
-        }
         if (price <= 0) {
             throw new NegativePriceException(price);
         }
-        stockItem.setQuantity(stockItem.getQuantity() - quantity);
-//        }
+        checkAndSetItemQuantity(item);
 
         boolean itemAdded = false;
         if (items.size() != 0) {
@@ -67,8 +58,24 @@ public class ShoppingCart {
         log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
     }
 
+    public void checkAndSetItemQuantity(SoldItem item) throws MaxQuantityExceededException, NegativeQuantityException {
+        StockItem stockItem = dao.findStockItem(item.getId());
+        int quantity = item.getQuantity();
+        if (quantity > stockItem.getQuantity()) {
+            throw new MaxQuantityExceededException(quantity);
+        } else if (quantity <= 0) {
+            throw new NegativeQuantityException(quantity);
+        }
+        stockItem.setQuantity(stockItem.getQuantity() - quantity);
+    }
+
     public List<SoldItem> getAll() {
         return items;
+    }
+
+    // For testing
+    public int getItemQuantity(SoldItem item) {
+        return item.getQuantity();
     }
 
     public double getTotalSum() {
