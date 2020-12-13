@@ -46,6 +46,6 @@ Automatic Unit Tests, Refactoring & (System-level) Functional Test Planning (wee
 ## Homework 7:
 Functional and Non-Functional System Testing (weeks 14 & 15) 
 
-*
+* All test plans and reports: https://docs.google.com/spreadsheets/d/16u7P77t6y3-VB8oW5c8Y7iIZRQ1bte1jYNK4z9WRQ4w/edit?usp=sharing
 
 We encourage you to use [markdown syntax](https://confluence.atlassian.com/bitbucketserver/markdown-syntax-guide-776639995.html)
